@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slow Page - Flamboyance Playground</title>
+  <link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+  <div id="loading-overlay" class="loading-overlay">
+    <div class="spinner"></div>
+    <p style="margin-top: 1rem; color: var(--text-muted);">Loading content...</p>
+    <p id="countdown" style="font-size: 0.875rem; color: var(--text-muted);">10 seconds remaining</p>
+  </div>
+
+  <div id="main-content" class="container" style="display: none;">
+    <div class="breadcrumb">
+      <a href="/">Home</a> / Stress Tests / Slow Page
+    </div>
+    
+    <h1>Slow Page Test</h1>
+    <p>
+      This page intentionally delays showing its main content for <strong>~10 seconds</strong> 
+      to test low-patience personas that may give up early.
+    </p>
+
+    <div class="success-message">
+      <strong>Content Loaded!</strong>
+      <p style="margin-bottom: 0; margin-top: 0.5rem;">
+        You waited patiently. Low-patience personas like <code>frustrated_exec</code> or 
+        <code>mobile_commuter</code> may have given up before reaching this point.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Slow Page Information</h3>
+      <p>
+        This scenario tests the <code>patience</code> attribute of personas. Personas with 
+        <code>patience &lt; 0.4</code> may stop early after only 30-40% of the session timeout.
+      </p>
+      <p>Personas likely to struggle with this page:</p>
+      <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
+        <li><code>frustrated_exec</code> (patience: 0.2)</li>
+        <li><code>anxious_newbie</code> (patience: 0.3)</li>
+        <li><code>mobile_commuter</code> (patience: 0.25)</li>
+      </ul>
+      <p style="margin-bottom: 0;">
+        Personas like <code>power_user</code> (patience: 0.9) or <code>methodical_tester</code> 
+        (patience: 0.95) will wait for the content.
+      </p>
+    </div>
+
+    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem;">
+      <a href="/shop/" class="btn btn-primary">Continue to Shop</a>
+      <a href="/" class="btn btn-secondary">Back to Hub</a>
+      <button type="button" class="btn btn-secondary" onclick="location.reload()">Reload (wait again)</button>
+    </div>
+  </div>
+
+  <script>
+    const DELAY_SECONDS = 10;
+    let remaining = DELAY_SECONDS;
+    
+    const countdownEl = document.getElementById('countdown');
+    const loadingOverlay = document.getElementById('loading-overlay');
+    const mainContent = document.getElementById('main-content');
+    
+    const countdownInterval = setInterval(() => {
+      remaining--;
+      if (remaining > 0) {
+        countdownEl.textContent = `${remaining} second${remaining !== 1 ? 's' : ''} remaining`;
+      } else {
+        countdownEl.textContent = 'Loading complete!';
+      }
+    }, 1000);
+    
+    setTimeout(() => {
+      clearInterval(countdownInterval);
+      loadingOverlay.style.display = 'none';
+      mainContent.style.display = 'block';
+    }, DELAY_SECONDS * 1000);
+  </script>
+</body>
+</html>

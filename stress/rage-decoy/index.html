@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rage Decoy - Flamboyance Playground</title>
+  <link rel="stylesheet" href="/src/style.css">
+  <style>
+    .fake-button {
+      display: inline-block;
+      padding: 1rem 2rem;
+      font-size: 1.125rem;
+      font-weight: 600;
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+      color: white;
+      border-radius: var(--radius);
+      cursor: pointer;
+      user-select: none;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      transition: transform 0.1s, box-shadow 0.1s;
+    }
+    
+    .fake-button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+    
+    .fake-button:active {
+      transform: translateY(0);
+    }
+    
+    .fake-card-button {
+      display: block;
+      padding: 1.5rem;
+      background: var(--card-bg);
+      border: 2px solid var(--primary);
+      border-radius: var(--radius);
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.2s;
+    }
+    
+    .fake-card-button:hover {
+      background: #f5f3ff;
+    }
+    
+    .fake-link {
+      color: var(--primary);
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="/">Home</a> / Stress Tests / Rage Decoy
+    </div>
+    
+    <h1>Rage Decoy Test</h1>
+    <p>
+      This page contains elements that <strong>look</strong> clickable but are not actual 
+      buttons or links. Rapid clicks on these decoys may trigger the <code>rage_click</code> 
+      frustration signal.
+    </p>
+
+    <div class="warning-message">
+      <strong>Scenario Goal:</strong> The decoy elements below appear interactive but do nothing. 
+      Look for the real button at the bottom to proceed.
+    </div>
+
+    <div class="section">
+      <h2>Decoy Elements</h2>
+      <p>These look like buttons but are just styled divs:</p>
+      
+      <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem;">
+        <!-- Decoy 1: Large primary-looking button -->
+        <div class="fake-button">
+          Click to Continue
+        </div>
+        
+        <!-- Decoy 2: Another styled div -->
+        <div class="fake-button" style="background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);">
+          Submit Order
+        </div>
+        
+        <!-- Decoy 3: Danger-styled decoy -->
+        <div class="fake-button" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);">
+          Delete Item
+        </div>
+      </div>
+      
+      <!-- Decoy 4: Card-style clickable area -->
+      <div class="fake-card-button" style="max-width: 300px; margin-bottom: 1rem;">
+        <strong style="color: var(--primary); font-size: 1.125rem;">Special Offer!</strong>
+        <p style="margin: 0.5rem 0 0 0; color: var(--text-muted);">Click here to claim your discount</p>
+      </div>
+      
+      <!-- Decoy 5: Fake link text -->
+      <p>
+        You can also <span class="fake-link">click this link</span> to learn more about our services, 
+        or <span class="fake-link">contact support</span> for help.
+      </p>
+    </div>
+
+    <div class="section" style="margin-top: 2rem; padding-top: 2rem; border-top: 2px solid var(--border);">
+      <h2>Real Actions</h2>
+      <p>These are actual interactive elements:</p>
+      
+      <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+        <a href="/" class="btn btn-primary">Continue to Hub</a>
+        <button type="button" class="btn btn-secondary" onclick="alert('This is a real button!')">
+          Real Button (shows alert)
+        </button>
+        <a href="/shop/" class="btn btn-secondary">Go to Shop</a>
+      </div>
+    </div>
+
+    <div class="footer">
+      <a href="/">← Back to Hub</a>
+    </div>
+  </div>
+</body>
+</html>

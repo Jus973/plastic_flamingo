@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Many Links - Flamboyance Playground</title>
+  <link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="/">Home</a> / Stress Tests / Many Links
+    </div>
+    
+    <h1>Many Links Test</h1>
+    <p>
+      This page contains <strong>40+ interactive elements</strong> to stress the agent's 
+      "first 30 only" sampling behavior. All elements are visible without scrolling on 
+      most viewports.
+    </p>
+
+    <div class="warning-message">
+      <strong>Scenario Goal:</strong> The agent can only sample 30 elements at a time. 
+      With 40+ targets, some will never be clicked in a single pass.
+    </div>
+
+    <div class="section">
+      <h2>Interactive Grid (40 elements)</h2>
+      <div class="links-grid">
+        <!-- Links 1-20 -->
+        <a href="#item-1">Link 1</a>
+        <a href="#item-2">Link 2</a>
+        <a href="#item-3">Link 3</a>
+        <a href="#item-4">Link 4</a>
+        <a href="#item-5">Link 5</a>
+        <a href="#item-6">Link 6</a>
+        <a href="#item-7">Link 7</a>
+        <a href="#item-8">Link 8</a>
+        <a href="#item-9">Link 9</a>
+        <a href="#item-10">Link 10</a>
+        <a href="#item-11">Link 11</a>
+        <a href="#item-12">Link 12</a>
+        <a href="#item-13">Link 13</a>
+        <a href="#item-14">Link 14</a>
+        <a href="#item-15">Link 15</a>
+        <a href="#item-16">Link 16</a>
+        <a href="#item-17">Link 17</a>
+        <a href="#item-18">Link 18</a>
+        <a href="#item-19">Link 19</a>
+        <a href="#item-20">Link 20</a>
+        <!-- Buttons 21-30 -->
+        <button type="button">Button 21</button>
+        <button type="button">Button 22</button>
+        <button type="button">Button 23</button>
+        <button type="button">Button 24</button>
+        <button type="button">Button 25</button>
+        <button type="button">Button 26</button>
+        <button type="button">Button 27</button>
+        <button type="button">Button 28</button>
+        <button type="button">Button 29</button>
+        <button type="button">Button 30</button>
+        <!-- More links 31-40 -->
+        <a href="#item-31">Link 31</a>
+        <a href="#item-32">Link 32</a>
+        <a href="#item-33">Link 33</a>
+        <a href="#item-34">Link 34</a>
+        <a href="#item-35">Link 35</a>
+        <a href="#item-36">Link 36</a>
+        <a href="#item-37">Link 37</a>
+        <a href="#item-38">Link 38</a>
+        <a href="#item-39">Link 39</a>
+        <a href="#item-40">Link 40</a>
+      </div>
+    </div>
+
+    <div class="section" style="margin-top: 1.5rem;">
+      <h2>Additional Navigation</h2>
+      <p>Extra links for thorough testing:</p>
+      <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+        <a href="/shop/" class="btn btn-secondary">Shop</a>
+        <a href="/cart/" class="btn btn-secondary">Cart</a>
+        <a href="/account/" class="btn btn-secondary">Account</a>
+        <a href="/signup/" class="btn btn-secondary">Sign Up</a>
+        <a href="/" class="btn btn-primary">Back to Hub</a>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 1rem;">
+      <h3>Total Interactive Elements</h3>
+      <p style="margin-bottom: 0;">
+        This page contains <strong>45</strong> interactive elements matching Flamboyance's selector:
+        <code>a, button, input[type='submit'], input[type='button'], [role='button'], [role='link'], [role='menuitem'], [role='tab']</code>
+      </p>
+    </div>
+  </div>
+</body>
+</html>

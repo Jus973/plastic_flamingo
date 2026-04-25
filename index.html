@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flamboyance Playground</title>
+  <link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Flamboyance Playground</h1>
+    <p>
+      A deliberately designed multi-page fixture site for testing <strong>Flamboyance</strong>, 
+      a tool that launches Playwright-based synthetic users against your app. Each scenario below 
+      is crafted to trigger specific frustration signals or test persona behaviors.
+    </p>
+
+    <div class="section">
+      <h2 class="section-title">Main Flows</h2>
+      <ul class="nav-list">
+        <li>
+          <a href="/shop/">
+            <span class="title">Shop</span>
+            <span class="desc">Start of the purchase flow - browse products</span>
+          </a>
+        </li>
+        <li>
+          <a href="/cart/">
+            <span class="title">Cart</span>
+            <span class="desc">Mid purchase flow - review cart items</span>
+          </a>
+        </li>
+        <li>
+          <a href="/checkout/">
+            <span class="title">Checkout</span>
+            <span class="desc">End state for purchase with success message</span>
+          </a>
+        </li>
+        <li>
+          <a href="/account/">
+            <span class="title">Account</span>
+            <span class="desc">Account area index page</span>
+          </a>
+        </li>
+        <li>
+          <a href="/account/settings/">
+            <span class="title">Account Settings</span>
+            <span class="desc">Notifications, password, preferences</span>
+          </a>
+        </li>
+        <li>
+          <a href="/signup/">
+            <span class="title">Sign Up</span>
+            <span class="desc">Simple signup form with client-side confirmation</span>
+          </a>
+        </li>
+        <li>
+          <a href="/order-status/">
+            <span class="title">Order Status</span>
+            <span class="desc">Order lookup by order number</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">Stress Test Scenarios</h2>
+      <ul class="nav-list">
+        <li>
+          <a href="/stress/circular/">
+            <span class="title">Circular Navigation</span>
+            <span class="desc">A ↔ B loop designed to trigger circular_navigation signal</span>
+          </a>
+        </li>
+        <li>
+          <a href="/stress/rage-decoy/">
+            <span class="title">Rage Decoy</span>
+            <span class="desc">Non-interactive elements that look clickable</span>
+          </a>
+        </li>
+        <li>
+          <a href="/stress/hidden-menu/">
+            <span class="title">Hidden Menu</span>
+            <span class="desc">Collapsed nav (aria-expanded) vs visible escape hatch</span>
+          </a>
+        </li>
+        <li>
+          <a href="/stress/icon-bar/">
+            <span class="title">Icon Bar</span>
+            <span class="desc">Icon-only actions vs labeled alternatives</span>
+          </a>
+        </li>
+        <li>
+          <a href="/stress/many-links/">
+            <span class="title">Many Links</span>
+            <span class="desc">35+ interactive targets to stress sampling behavior</span>
+          </a>
+        </li>
+        <li>
+          <a href="/stress/slow/">
+            <span class="title">Slow Page</span>
+            <span class="desc">Delayed content for testing low-patience personas</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="footer">
+      <p>Flamboyance Playground — fixture website for automated UX testing</p>
+    </div>
+  </div>
+</body>
+</html>

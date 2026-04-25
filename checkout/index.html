@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout - Flamboyance Playground</title>
+  <link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="/">Home</a> / <a href="/shop/">Shop</a> / <a href="/cart/">Cart</a> / Checkout
+    </div>
+    
+    <h1>Checkout Complete</h1>
+    
+    <div class="success-message">
+      <strong>Thank you for your order!</strong>
+      <p style="margin-bottom: 0; margin-top: 0.5rem;">
+        Your order #FP-2024-8847 has been successfully placed. 
+        You will receive a confirmation email shortly.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Order Summary</h3>
+      <div style="margin-top: 1rem;">
+        <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--border);">
+          <span>Widget Pro × 1</span>
+          <span>$49.99</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--border);">
+          <span>Gadget Plus × 2</span>
+          <span>$159.98</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--border);">
+          <span>Shipping</span>
+          <span>$9.99</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; padding: 0.75rem 0; font-weight: 600; font-size: 1.125rem;">
+          <span>Total</span>
+          <span>$219.96</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+      <a href="/order-status/" class="btn btn-primary">Track Order</a>
+      <a href="/shop/" class="btn btn-secondary">Continue Shopping</a>
+      <a href="/" class="btn btn-secondary">Back to Hub</a>
+    </div>
+  </div>
+</body>
+</html>

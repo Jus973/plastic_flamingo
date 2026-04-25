@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account Settings - Flamboyance Playground</title>
+  <link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="/">Home</a> / <a href="/account/">Account</a> / Settings
+    </div>
+    
+    <h1>Account Settings</h1>
+    <p>Manage your notifications, password, and preferences.</p>
+
+    <div class="card">
+      <h3>Notification Preferences</h3>
+      <div class="form-group" style="margin-top: 1rem;">
+        <label>
+          <input type="checkbox" checked> Email notifications for order updates
+        </label>
+      </div>
+      <div class="form-group">
+        <label>
+          <input type="checkbox" checked> Marketing emails and promotions
+        </label>
+      </div>
+      <div class="form-group">
+        <label>
+          <input type="checkbox"> SMS notifications
+        </label>
+      </div>
+      <button type="button" class="btn btn-primary">Save Notifications</button>
+    </div>
+
+    <div class="card">
+      <h3>Change Password</h3>
+      <form onsubmit="event.preventDefault(); alert('Password updated!');">
+        <div class="form-group">
+          <label for="current-password">Current Password</label>
+          <input type="password" id="current-password" placeholder="Enter current password">
+        </div>
+        <div class="form-group">
+          <label for="new-password">New Password</label>
+          <input type="password" id="new-password" placeholder="Enter new password">
+        </div>
+        <div class="form-group">
+          <label for="confirm-password">Confirm New Password</label>
+          <input type="password" id="confirm-password" placeholder="Confirm new password">
+        </div>
+        <button type="submit" class="btn btn-primary">Update Password</button>
+      </form>
+    </div>
+
+    <div class="card">
+      <h3>Display Preferences</h3>
+      <div class="form-group">
+        <label for="language">Language</label>
+        <select id="language">
+          <option value="en">English</option>
+          <option value="es">Español</option>
+          <option value="fr">Français</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="timezone">Timezone</label>
+        <select id="timezone">
+          <option value="pst">Pacific Time (PT)</option>
+          <option value="mst">Mountain Time (MT)</option>
+          <option value="cst">Central Time (CT)</option>
+          <option value="est">Eastern Time (ET)</option>
+        </select>
+      </div>
+      <button type="button" class="btn btn-primary">Save Preferences</button>
+    </div>
+
+    <div class="card" style="border-color: var(--danger);">
+      <h3 style="color: var(--danger);">Danger Zone</h3>
+      <p>Permanently delete your account and all associated data.</p>
+      <button type="button" class="btn btn-danger" onclick="alert('Account deletion is disabled in this demo.')">Delete Account</button>
+    </div>
+
+    <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+      <a href="/account/" class="btn btn-secondary">Back to Account</a>
+      <a href="/" class="btn btn-secondary">Back to Hub</a>
+    </div>
+  </div>
+</body>
+</html>

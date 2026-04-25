@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Icon Bar - Flamboyance Playground</title>
+  <link rel="stylesheet" href="/src/style.css">
+  <style>
+    .icon-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      cursor: pointer;
+      font-size: 1.5rem;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    
+    .icon-action:hover {
+      background: var(--bg);
+      border-color: var(--primary);
+    }
+    
+    .toolbar {
+      display: flex;
+      gap: 0.5rem;
+      padding: 1rem;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 1rem;
+    }
+    
+    .labeled-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    
+    .labeled-action {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+      text-decoration: none;
+      color: var(--text);
+    }
+    
+    .labeled-action:hover {
+      background: var(--bg);
+      border-color: var(--primary);
+      text-decoration: none;
+    }
+    
+    .labeled-action .icon {
+      font-size: 1.25rem;
+      width: 24px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="/">Home</a> / Stress Tests / Icon Bar
+    </div>
+    
+    <h1>Icon Bar Test</h1>
+    <p>
+      This scenario tests persona behavior with icon-only buttons. The 
+      <code>accessibility_user</code> persona (with <code>prefers_visible_text</code>) 
+      will skip elements that have no visible inner text.
+    </p>
+
+    <div class="warning-message">
+      <strong>Scenario Goal:</strong> Perform actions like Save, Edit, Delete, and Share. 
+      The icon-only toolbar requires interpretation; the labeled alternatives are explicit.
+    </div>
+
+    <div class="section">
+      <h2>Icon-Only Toolbar</h2>
+      <p>These buttons have icons only (with aria-labels for screen readers, but no visible text):</p>
+      
+      <div class="toolbar">
+        <button type="button" class="icon-action" aria-label="Save" onclick="showAction('Save')">
+          💾
+        </button>
+        <button type="button" class="icon-action" aria-label="Edit" onclick="showAction('Edit')">
+          ✏️
+        </button>
+        <button type="button" class="icon-action" aria-label="Delete" onclick="showAction('Delete')">
+          🗑️
+        </button>
+        <button type="button" class="icon-action" aria-label="Share" onclick="showAction('Share')">
+          📤
+        </button>
+        <button type="button" class="icon-action" aria-label="Print" onclick="showAction('Print')">
+          🖨️
+        </button>
+        <button type="button" class="icon-action" aria-label="Download" onclick="showAction('Download')">
+          ⬇️
+        </button>
+        <button type="button" class="icon-action" aria-label="Settings" onclick="showAction('Settings')">
+          ⚙️
+        </button>
+        <button type="button" class="icon-action" aria-label="Help" onclick="showAction('Help')">
+          ❓
+        </button>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Labeled Actions (Accessible Alternative)</h2>
+      <p>The same actions with visible text labels:</p>
+      
+      <div class="labeled-actions" style="max-width: 300px;">
+        <button type="button" class="labeled-action" onclick="showAction('Save')">
+          <span class="icon">💾</span>
+          <span>Save (text)</span>
+        </button>
+        <button type="button" class="labeled-action" onclick="showAction('Edit')">
+          <span class="icon">✏️</span>
+          <span>Edit (text)</span>
+        </button>
+        <button type="button" class="labeled-action" onclick="showAction('Delete')">
+          <span class="icon">🗑️</span>
+          <span>Delete (text)</span>
+        </button>
+        <button type="button" class="labeled-action" onclick="showAction('Share')">
+          <span class="icon">📤</span>
+          <span>Share (text)</span>
+        </button>
+        <button type="button" class="labeled-action" onclick="showAction('Print')">
+          <span class="icon">🖨️</span>
+          <span>Print (text)</span>
+        </button>
+        <button type="button" class="labeled-action" onclick="showAction('Download')">
+          <span class="icon">⬇️</span>
+          <span>Download (text)</span>
+        </button>
+        <button type="button" class="labeled-action" onclick="showAction('Settings')">
+          <span class="icon">⚙️</span>
+          <span>Settings (text)</span>
+        </button>
+        <button type="button" class="labeled-action" onclick="showAction('Help')">
+          <span class="icon">❓</span>
+          <span>Help (text)</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="action-feedback" class="success-message" style="display: none; margin-top: 1rem;">
+      Action performed: <span id="action-name"></span>
+    </div>
+
+    <div class="footer" style="margin-top: 2rem;">
+      <a href="/" class="btn btn-secondary">Back to Hub</a>
+    </div>
+  </div>
+
+  <script>
+    function showAction(action) {
+      const feedback = document.getElementById('action-feedback');
+      const actionName = document.getElementById('action-name');
+      actionName.textContent = action;
+      feedback.style.display = 'block';
+      setTimeout(() => { feedback.style.display = 'none'; }, 2000);
+    }
+  </script>
+</body>
+</html>

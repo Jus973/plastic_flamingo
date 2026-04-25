@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Status - Flamboyance Playground</title>
+  <link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="/">Home</a> / Order Status
+    </div>
+    
+    <h1>Order Status</h1>
+    <p>Track your order or look up order details.</p>
+
+    <div class="card" style="max-width: 500px;">
+      <h3>Look Up Order</h3>
+      <form onsubmit="lookupOrder(event)">
+        <div class="form-group">
+          <label for="order-number">Order Number</label>
+          <input type="text" id="order-number" placeholder="e.g. FP-2024-8847" value="FP-2024-8847">
+        </div>
+        <button type="submit" class="btn btn-primary">Track Order</button>
+      </form>
+    </div>
+
+    <div id="order-result" class="card" style="margin-top: 1rem;">
+      <h3>Order #FP-2024-8847</h3>
+      <div style="margin-top: 1rem;">
+        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+          <div style="width: 24px; height: 24px; background: var(--success); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem;">✓</div>
+          <div>
+            <strong>Order Placed</strong>
+            <div style="font-size: 0.875rem; color: var(--text-muted);">April 23, 2024 at 2:34 PM</div>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+          <div style="width: 24px; height: 24px; background: var(--success); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem;">✓</div>
+          <div>
+            <strong>Processing</strong>
+            <div style="font-size: 0.875rem; color: var(--text-muted);">April 23, 2024 at 4:15 PM</div>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+          <div style="width: 24px; height: 24px; background: var(--success); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem;">✓</div>
+          <div>
+            <strong>Shipped</strong>
+            <div style="font-size: 0.875rem; color: var(--text-muted);">April 24, 2024 at 9:00 AM</div>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <div style="width: 24px; height: 24px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem;">4</div>
+          <div>
+            <strong>Out for Delivery</strong>
+            <div style="font-size: 0.875rem; color: var(--text-muted);">Expected by April 25, 2024</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+      <a href="/account/" class="btn btn-secondary">My Account</a>
+      <a href="/shop/" class="btn btn-secondary">Continue Shopping</a>
+      <a href="/" class="btn btn-secondary">Back to Hub</a>
+    </div>
+  </div>
+
+  <script>
+    function lookupOrder(event) {
+      event.preventDefault();
+      const orderNum = document.getElementById('order-number').value;
+      alert(`Looking up order: ${orderNum}\n\nOrder status displayed below.`);
+    }
+  </script>
+</body>
+</html>

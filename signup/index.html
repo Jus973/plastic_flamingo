@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - Flamboyance Playground</title>
+  <link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="/">Home</a> / Sign Up
+    </div>
+    
+    <h1>Create Account</h1>
+    <p>Sign up for a new account to start shopping.</p>
+
+    <div class="card" style="max-width: 500px;">
+      <form id="signup-form" onsubmit="handleSignup(event)">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" placeholder="Enter your full name" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" placeholder="Enter your email" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="Create a password" required minlength="8">
+        </div>
+        <div class="form-group">
+          <label for="confirm">Confirm Password</label>
+          <input type="password" id="confirm" placeholder="Confirm your password" required>
+        </div>
+        <div class="form-group">
+          <label>
+            <input type="checkbox" required> I agree to the Terms of Service and Privacy Policy
+          </label>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Create Account</button>
+      </form>
+      
+      <div id="success-message" style="display: none;">
+        <div class="success-message" style="margin-top: 1rem;">
+          <strong>Account Created!</strong>
+          <p style="margin-bottom: 0; margin-top: 0.5rem;">
+            Thank you for signing up. A confirmation email has been sent to your address.
+          </p>
+        </div>
+        <a href="/shop/" class="btn btn-primary" style="margin-top: 1rem; display: inline-block;">Start Shopping</a>
+      </div>
+    </div>
+
+    <p style="margin-top: 1rem;">
+      Already have an account? <a href="/account/">Sign in</a>
+    </p>
+
+    <div style="margin-top: 1rem;">
+      <a href="/" class="btn btn-secondary">Back to Hub</a>
+    </div>
+  </div>
+
+  <script>
+    function handleSignup(event) {
+      event.preventDefault();
+      document.getElementById('signup-form').style.display = 'none';
+      document.getElementById('success-message').style.display = 'block';
+    }
+  </script>
+</body>
+</html>

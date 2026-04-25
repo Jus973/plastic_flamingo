@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop - Flamboyance Playground</title>
+  <link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="/">Home</a> / Shop
+    </div>
+    
+    <h1>Shop</h1>
+    <p>Browse our selection of products. Add items to your cart to continue.</p>
+
+    <div class="product-grid">
+      <div class="product-card">
+        <h3>Widget Pro</h3>
+        <p>The ultimate widget for all your needs.</p>
+        <div class="price">$49.99</div>
+        <button type="button" class="btn btn-primary" onclick="addToCart('Widget Pro')">Add to Cart</button>
+      </div>
+      
+      <div class="product-card">
+        <h3>Gadget Plus</h3>
+        <p>Enhanced gadget with premium features.</p>
+        <div class="price">$79.99</div>
+        <button type="button" class="btn btn-primary" onclick="addToCart('Gadget Plus')">Add to Cart</button>
+      </div>
+      
+      <div class="product-card">
+        <h3>Doohickey Basic</h3>
+        <p>Essential doohickey for everyday use.</p>
+        <div class="price">$29.99</div>
+        <button type="button" class="btn btn-primary" onclick="addToCart('Doohickey Basic')">Add to Cart</button>
+      </div>
+      
+      <div class="product-card">
+        <h3>Thingamajig XL</h3>
+        <p>Extra large thingamajig for big projects.</p>
+        <div class="price">$99.99</div>
+        <button type="button" class="btn btn-primary" onclick="addToCart('Thingamajig XL')">Add to Cart</button>
+      </div>
+    </div>
+
+    <div class="section" style="margin-top: 2rem;">
+      <a href="/cart/" class="btn btn-secondary">View Cart</a>
+      <a href="/" class="btn btn-secondary" style="margin-left: 0.5rem;">Back to Hub</a>
+    </div>
+
+    <div id="toast" style="display: none; position: fixed; bottom: 20px; right: 20px; background: var(--success); color: white; padding: 1rem; border-radius: var(--radius);">
+      Added to cart!
+    </div>
+  </div>
+
+  <script>
+    function addToCart(product) {
+      const toast = document.getElementById('toast');
+      toast.textContent = `${product} added to cart!`;
+      toast.style.display = 'block';
+      setTimeout(() => { toast.style.display = 'none'; }, 2000);
+    }
+  </script>
+</body>
+</html>

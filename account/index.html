@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account - Flamboyance Playground</title>
+  <link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="/">Home</a> / Account
+    </div>
+    
+    <h1>My Account</h1>
+    <p>Manage your account settings and preferences.</p>
+
+    <div class="grid-2">
+      <div class="card">
+        <h3>Profile Information</h3>
+        <p>Name: Demo User</p>
+        <p style="margin-bottom: 0;">Email: demo@example.com</p>
+        <a href="/account/settings/" class="btn btn-secondary" style="margin-top: 1rem; display: inline-block;">Edit Profile</a>
+      </div>
+      
+      <div class="card">
+        <h3>Recent Orders</h3>
+        <p>Order #FP-2024-8847 - Completed</p>
+        <p style="margin-bottom: 0;">Order #FP-2024-8502 - Delivered</p>
+        <a href="/order-status/" class="btn btn-secondary" style="margin-top: 1rem; display: inline-block;">View All Orders</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Quick Links</h3>
+      <ul class="nav-list" style="margin-top: 1rem;">
+        <li>
+          <a href="/account/settings/">
+            <span class="title">Account Settings</span>
+            <span class="desc">Notifications, password, and preferences</span>
+          </a>
+        </li>
+        <li>
+          <a href="/order-status/">
+            <span class="title">Order Status</span>
+            <span class="desc">Track and manage your orders</span>
+          </a>
+        </li>
+        <li>
+          <a href="/shop/">
+            <span class="title">Continue Shopping</span>
+            <span class="desc">Browse more products</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div style="margin-top: 1rem;">
+      <a href="/" class="btn btn-secondary">Back to Hub</a>
+    </div>
+  </div>
+</body>
+</html>

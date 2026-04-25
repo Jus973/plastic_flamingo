@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Circular Navigation - Flamboyance Playground</title>
+  <link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="/">Home</a> / Stress Tests / Circular Navigation
+    </div>
+    
+    <h1>Circular Navigation Test</h1>
+    <p>
+      This scenario provides two pages (A and B) that link to each other, 
+      designed to trigger the <code>circular_navigation</code> frustration signal 
+      when an agent navigates A → B → A.
+    </p>
+
+    <div class="warning-message">
+      <strong>Scenario Goal:</strong> Navigate between Page A and Page B repeatedly. 
+      The agent may get stuck in an A ↔ B loop pattern.
+    </div>
+
+    <div class="grid-2" style="margin-top: 1rem;">
+      <div class="card">
+        <h3>Page A</h3>
+        <p>Start the loop from Page A.</p>
+        <a href="/stress/circular/a/" class="btn btn-primary">Go to Page A</a>
+      </div>
+      
+      <div class="card">
+        <h3>Page B</h3>
+        <p>Or start from Page B instead.</p>
+        <a href="/stress/circular/b/" class="btn btn-primary">Go to Page B</a>
+      </div>
+    </div>
+
+    <div style="margin-top: 2rem;">
+      <a href="/" class="btn btn-secondary">Exit to Hub</a>
+    </div>
+  </div>
+</body>
+</html>

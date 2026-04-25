@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hidden Menu - Flamboyance Playground</title>
+  <link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="/">Home</a> / Stress Tests / Hidden Menu
+    </div>
+    
+    <h1>Hidden Menu Test</h1>
+    <p>
+      This scenario tests persona behavior with collapsed menus. Low <code>tech_literacy</code> 
+      personas skip elements with <code>aria-expanded="false"</code>.
+    </p>
+
+    <div class="warning-message">
+      <strong>Scenario Goal:</strong> Find and access "Secret Settings". There are two paths: 
+      one through a collapsed menu (hidden by default), and one always-visible alternative.
+    </div>
+
+    <div class="section">
+      <h2>Navigation Menu</h2>
+      
+      <!-- Hidden menu with aria-expanded="false" -->
+      <div class="disclosure">
+        <button 
+          type="button" 
+          class="disclosure-trigger" 
+          aria-expanded="false" 
+          aria-controls="hidden-nav"
+          onclick="toggleDisclosure(this)"
+        >
+          <span>Advanced Options Menu</span>
+          <span class="disclosure-arrow">▼</span>
+        </button>
+        <div id="hidden-nav" class="disclosure-content">
+          <ul class="nav-list">
+            <li><a href="/account/settings/">Account Settings</a></li>
+            <li><a href="#secret-settings">Secret Settings</a></li>
+            <li><a href="/order-status/">Order History</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Another collapsed section -->
+      <div class="disclosure">
+        <button 
+          type="button" 
+          class="disclosure-trigger" 
+          aria-expanded="false" 
+          aria-controls="admin-nav"
+          onclick="toggleDisclosure(this)"
+        >
+          <span>Admin Tools (Collapsed)</span>
+          <span class="disclosure-arrow">▼</span>
+        </button>
+        <div id="admin-nav" class="disclosure-content">
+          <ul class="nav-list">
+            <li><a href="#dashboard">Dashboard</a></li>
+            <li><a href="#secret-settings">Secret Settings (Admin Path)</a></li>
+            <li><a href="#reports">Reports</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Main Content</h2>
+      <div class="card">
+        <h3>Welcome to the Hidden Menu Test</h3>
+        <p>
+          This page demonstrates how personas with different tech literacy levels 
+          interact with collapsed navigation elements. Personas with 
+          <code>tech_literacy &lt; 0.5</code> will skip the menus above because they 
+          have <code>aria-expanded="false"</code>.
+        </p>
+        <p>
+          The "Secret Settings" destination can be reached through the collapsed menus above, 
+          or via the always-visible footer link below.
+        </p>
+      </div>
+      
+      <div id="secret-settings" class="card" style="border-color: var(--success); margin-top: 1rem;">
+        <h3 style="color: var(--success);">Secret Settings Found!</h3>
+        <p>
+          Congratulations! You've reached the Secret Settings area. This is the destination 
+          that personas are trying to find.
+        </p>
+        <div class="form-group">
+          <label>Secret Option 1</label>
+          <select>
+            <option>Enabled</option>
+            <option>Disabled</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Secret Option 2</label>
+          <input type="text" value="Hidden Value" />
+        </div>
+        <button type="button" class="btn btn-success">Save Secret Settings</button>
+      </div>
+    </div>
+
+    <div class="footer" style="background: #f0fdf4; padding: 1rem; border-radius: var(--radius); margin-top: 2rem;">
+      <strong>Easy Path (Always Visible):</strong>
+      <p style="margin: 0.5rem 0;">
+        Low tech-literacy personas can use this visible link instead of expanding the menu:
+      </p>
+      <a href="#secret-settings" class="btn btn-primary" style="margin-right: 0.5rem;">
+        Settings (easy path)
+      </a>
+      <a href="/" class="btn btn-secondary">Back to Hub</a>
+    </div>
+  </div>
+
+  <script>
+    function toggleDisclosure(button) {
+      const expanded = button.getAttribute('aria-expanded') === 'true';
+      button.setAttribute('aria-expanded', !expanded);
+      const contentId = button.getAttribute('aria-controls');
+      const content = document.getElementById(contentId);
+      if (content) {
+        content.classList.toggle('open', !expanded);
+      }
+    }
+  </script>
+</body>
+</html>

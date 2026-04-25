@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page B - Circular Navigation - Flamboyance Playground</title>
+  <link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="/">Home</a> / <a href="/stress/circular/">Circular</a> / Page B
+    </div>
+    
+    <h1 style="color: #8b5cf6;">Page B</h1>
+    <p>You are currently on <strong>Page B</strong>. Click below to navigate to Page A.</p>
+
+    <div class="card" style="border-color: #8b5cf6; border-width: 2px;">
+      <h3>Current Location: B</h3>
+      <p>This page and Page A form a loop. Agents may get stuck bouncing between them.</p>
+      
+      <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem;">
+        <a href="/stress/circular/a/" class="btn btn-primary" style="background: #8b5cf6;">Go to Page A</a>
+        <button type="button" class="btn btn-secondary" onclick="window.location.href='/stress/circular/a/'">
+          Navigate to A (button)
+        </button>
+      </div>
+    </div>
+
+    <div style="margin-top: 2rem; padding: 1rem; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: var(--radius);">
+      <strong>Escape Route:</strong> Use the link below to exit the loop.
+      <div style="margin-top: 0.5rem;">
+        <a href="/" class="btn btn-success">Exit to Hub</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
