@@ -5,6 +5,79 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Shop - Flamboyance Playground</title>
   <link rel="stylesheet" href="/src/style.css">
+  <style>
+    .shop-layout {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 1.5rem;
+    }
+    @media (max-width: 768px) {
+      .shop-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+    .sidebar {
+      position: sticky;
+      top: 1rem;
+    }
+    .category-list {
+      list-style: none;
+    }
+    .category-list li {
+      margin-bottom: 0.25rem;
+    }
+    .category-list a {
+      display: block;
+      padding: 0.5rem;
+      border-radius: var(--radius);
+      color: var(--text);
+      text-decoration: none;
+    }
+    .category-list a:hover, .category-list a.active {
+      background: var(--primary);
+      color: white;
+    }
+    .promo-banner {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      border: 2px solid #f59e0b;
+      border-radius: var(--radius);
+      padding: 1rem;
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .promo-banner a {
+      color: #92400e;
+      font-weight: 600;
+    }
+    .competing-ctas {
+      display: flex;
+      gap: 0.25rem;
+      flex-wrap: wrap;
+      margin-top: 0.75rem;
+    }
+    .competing-ctas button, .competing-ctas a {
+      font-size: 0.75rem;
+      padding: 0.375rem 0.5rem;
+    }
+    .product-card {
+      position: relative;
+    }
+    .product-badge {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: var(--danger);
+      color: white;
+      font-size: 0.625rem;
+      padding: 0.25rem 0.5rem;
+      border-radius: 999px;
+      font-weight: 600;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -15,38 +88,149 @@
     <h1>Shop</h1>
     <p>Browse our selection of products. Add items to your cart to continue.</p>
 
-    <div class="product-grid">
-      <div class="product-card">
-        <h3>Widget Pro</h3>
-        <p>The ultimate widget for all your needs.</p>
-        <div class="price">$49.99</div>
-        <button type="button" class="btn btn-primary" onclick="addToCart('Widget Pro')">Add to Cart</button>
+    <!-- Promotional banner that looks like navigation -->
+    <div class="promo-banner">
+      <div>
+        <strong>FLASH SALE!</strong> Up to 50% off selected items
       </div>
-      
-      <div class="product-card">
-        <h3>Gadget Plus</h3>
-        <p>Enhanced gadget with premium features.</p>
-        <div class="price">$79.99</div>
-        <button type="button" class="btn btn-primary" onclick="addToCart('Gadget Plus')">Add to Cart</button>
-      </div>
-      
-      <div class="product-card">
-        <h3>Doohickey Basic</h3>
-        <p>Essential doohickey for everyday use.</p>
-        <div class="price">$29.99</div>
-        <button type="button" class="btn btn-primary" onclick="addToCart('Doohickey Basic')">Add to Cart</button>
-      </div>
-      
-      <div class="product-card">
-        <h3>Thingamajig XL</h3>
-        <p>Extra large thingamajig for big projects.</p>
-        <div class="price">$99.99</div>
-        <button type="button" class="btn btn-primary" onclick="addToCart('Thingamajig XL')">Add to Cart</button>
+      <div>
+        <a href="/shop/">View Deals</a> | 
+        <a href="/shop/">New Arrivals</a> | 
+        <a href="/shop/">Best Sellers</a>
       </div>
     </div>
 
+    <div class="shop-layout">
+      <!-- Categories sidebar that links back to the same page -->
+      <aside class="sidebar">
+        <div class="card">
+          <h3 style="font-size: 1rem; margin-bottom: 0.75rem;">Categories</h3>
+          <ul class="category-list">
+            <li><a href="/shop/" class="active">All Products</a></li>
+            <li><a href="/shop/">Widgets</a></li>
+            <li><a href="/shop/">Gadgets</a></li>
+            <li><a href="/shop/">Doohickeys</a></li>
+            <li><a href="/shop/">Thingamajigs</a></li>
+            <li><a href="/shop/">Accessories</a></li>
+            <li><a href="/shop/">On Sale</a></li>
+          </ul>
+        </div>
+
+        <div class="card" style="margin-top: 1rem;">
+          <h3 style="font-size: 1rem; margin-bottom: 0.75rem;">Filter By</h3>
+          <div class="form-group">
+            <label for="price-filter">Price Range</label>
+            <select id="price-filter" onchange="alert('Filter not implemented')">
+              <option>Any Price</option>
+              <option>Under $50</option>
+              <option>$50 - $100</option>
+              <option>Over $100</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="sort-filter">Sort By</label>
+            <select id="sort-filter" onchange="alert('Sort not implemented')">
+              <option>Featured</option>
+              <option>Price: Low to High</option>
+              <option>Price: High to Low</option>
+              <option>Newest</option>
+            </select>
+          </div>
+          <button type="button" class="btn btn-secondary" style="width: 100%;" onclick="alert('Filter applied (not really)')">
+            Apply Filters
+          </button>
+        </div>
+      </aside>
+
+      <main>
+        <div class="product-grid">
+          <div class="product-card">
+            <span class="product-badge">HOT</span>
+            <h3>Widget Pro</h3>
+            <p>The ultimate widget for all your needs.</p>
+            <div class="price">$49.99</div>
+            <!-- Competing CTAs -->
+            <div class="competing-ctas">
+              <button type="button" class="btn btn-primary" onclick="addToCart('Widget Pro')">Add to Cart</button>
+              <button type="button" class="btn btn-secondary" onclick="alert('Quick view not available')">Quick View</button>
+              <a href="/shop/" class="btn btn-secondary">Compare</a>
+              <button type="button" class="btn btn-secondary" onclick="alert('Added to wishlist')">♡</button>
+            </div>
+          </div>
+          
+          <div class="product-card">
+            <span class="product-badge">SALE</span>
+            <h3>Gadget Plus</h3>
+            <p>Enhanced gadget with premium features.</p>
+            <div class="price">$79.99 <span style="text-decoration: line-through; color: var(--text-muted); font-size: 0.875rem;">$99.99</span></div>
+            <div class="competing-ctas">
+              <button type="button" class="btn btn-primary" onclick="addToCart('Gadget Plus')">Add to Cart</button>
+              <button type="button" class="btn btn-secondary" onclick="alert('Quick view not available')">Quick View</button>
+              <a href="/shop/" class="btn btn-secondary">Compare</a>
+              <button type="button" class="btn btn-secondary" onclick="alert('Added to wishlist')">♡</button>
+            </div>
+          </div>
+          
+          <div class="product-card">
+            <h3>Doohickey Basic</h3>
+            <p>Essential doohickey for everyday use.</p>
+            <div class="price">$29.99</div>
+            <div class="competing-ctas">
+              <button type="button" class="btn btn-primary" onclick="addToCart('Doohickey Basic')">Add to Cart</button>
+              <button type="button" class="btn btn-secondary" onclick="alert('Quick view not available')">Quick View</button>
+              <a href="/shop/" class="btn btn-secondary">Compare</a>
+              <button type="button" class="btn btn-secondary" onclick="alert('Added to wishlist')">♡</button>
+            </div>
+          </div>
+          
+          <div class="product-card">
+            <span class="product-badge">NEW</span>
+            <h3>Thingamajig XL</h3>
+            <p>Extra large thingamajig for big projects.</p>
+            <div class="price">$99.99</div>
+            <div class="competing-ctas">
+              <button type="button" class="btn btn-primary" onclick="addToCart('Thingamajig XL')">Add to Cart</button>
+              <button type="button" class="btn btn-secondary" onclick="alert('Quick view not available')">Quick View</button>
+              <a href="/shop/" class="btn btn-secondary">Compare</a>
+              <button type="button" class="btn btn-secondary" onclick="alert('Added to wishlist')">♡</button>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <h3>Gizmo Deluxe</h3>
+            <p>Premium gizmo with extra features.</p>
+            <div class="price">$149.99</div>
+            <div class="competing-ctas">
+              <button type="button" class="btn btn-primary" onclick="addToCart('Gizmo Deluxe')">Add to Cart</button>
+              <button type="button" class="btn btn-secondary" onclick="alert('Quick view not available')">Quick View</button>
+              <a href="/shop/" class="btn btn-secondary">Compare</a>
+              <button type="button" class="btn btn-secondary" onclick="alert('Added to wishlist')">♡</button>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <span class="product-badge">SALE</span>
+            <h3>Whatchamacallit</h3>
+            <p>Versatile whatchamacallit for any occasion.</p>
+            <div class="price">$39.99 <span style="text-decoration: line-through; color: var(--text-muted); font-size: 0.875rem;">$59.99</span></div>
+            <div class="competing-ctas">
+              <button type="button" class="btn btn-primary" onclick="addToCart('Whatchamacallit')">Add to Cart</button>
+              <button type="button" class="btn btn-secondary" onclick="alert('Quick view not available')">Quick View</button>
+              <a href="/shop/" class="btn btn-secondary">Compare</a>
+              <button type="button" class="btn btn-secondary" onclick="alert('Added to wishlist')">♡</button>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: 1.5rem; text-align: center;">
+          <button type="button" class="btn btn-secondary" onclick="alert('No more products to load')">Load More Products</button>
+        </div>
+      </main>
+    </div>
+
     <div class="section" style="margin-top: 2rem;">
-      <a href="/cart/" class="btn btn-secondary">View Cart</a>
+      <a href="/cart/" class="btn btn-primary">View Cart</a>
+      <a href="/checkout/shipping/" class="btn btn-secondary" style="margin-left: 0.5rem;">Checkout</a>
       <a href="/" class="btn btn-secondary" style="margin-left: 0.5rem;">Back to Hub</a>
     </div>
 

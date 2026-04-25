@@ -5,9 +5,70 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Order Status - Flamboyance Playground</title>
   <link rel="stylesheet" href="/src/style.css">
+  <style>
+    /* Mobile-hostile styles */
+    @media (max-width: 400px) {
+      .mobile-hostile-table {
+        min-width: 600px;
+      }
+      .mobile-tiny-btn {
+        font-size: 0.625rem !important;
+        padding: 0.25rem 0.375rem !important;
+        min-width: 32px;
+        min-height: 32px;
+      }
+      .mobile-below-fold {
+        margin-top: 100vh;
+      }
+      .mobile-scroll-hint {
+        display: block !important;
+      }
+    }
+    .mobile-scroll-hint {
+      display: none;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+    .order-table-container {
+      overflow-x: auto;
+      margin-bottom: 1rem;
+    }
+    .order-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 500px;
+    }
+    .order-table th, .order-table td {
+      padding: 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    .order-table th {
+      background: var(--bg);
+      font-weight: 600;
+    }
+    .loading-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      background: var(--bg);
+      border-radius: var(--radius);
+      margin-bottom: 1rem;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
+  <!-- 4-second loading overlay -->
+  <div id="loading-overlay" class="loading-overlay">
+    <div class="spinner"></div>
+    <p style="margin-top: 1rem; color: var(--text-muted);">Loading order information...</p>
+    <p id="load-countdown" style="font-size: 0.875rem; color: var(--text-muted);">Please wait 4 seconds</p>
+  </div>
+
+  <div id="main-content" class="container" style="display: none;">
     <div class="breadcrumb">
       <a href="/">Home</a> / Order Status
     </div>
@@ -15,19 +76,93 @@
     <h1>Order Status</h1>
     <p>Track your order or look up order details.</p>
 
-    <div class="card" style="max-width: 500px;">
+    <!-- Promo banner that pushes content down on mobile -->
+    <div class="card" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-color: #f59e0b;">
+      <h3 style="color: #92400e;">Special Offer for Returning Customers!</h3>
+      <p style="color: #92400e;">Get 20% off your next order when you subscribe to our newsletter. Plus, enjoy free shipping on orders over $50!</p>
+      <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+        <button type="button" class="btn btn-primary" onclick="alert('Subscribed!')">Subscribe Now</button>
+        <button type="button" class="btn btn-secondary" onclick="alert('Offer dismissed')">Maybe Later</button>
+        <a href="/shop/" class="btn btn-secondary">Shop Now</a>
+      </div>
+    </div>
+
+    <!-- On mobile this section appears below the fold -->
+    <div class="card mobile-below-fold" style="max-width: 500px;">
       <h3>Look Up Order</h3>
+      <p class="mobile-scroll-hint">↓ Scroll down to find the order lookup form</p>
       <form onsubmit="lookupOrder(event)">
         <div class="form-group">
           <label for="order-number">Order Number</label>
           <input type="text" id="order-number" placeholder="e.g. FP-2024-8847" value="FP-2024-8847">
         </div>
-        <button type="submit" class="btn btn-primary">Track Order</button>
+        <!-- Tiny button on mobile -->
+        <button type="submit" class="btn btn-primary mobile-tiny-btn">Track</button>
       </form>
     </div>
 
-    <div id="order-result" class="card" style="margin-top: 1rem;">
-      <h3>Order #FP-2024-8847</h3>
+    <!-- Wide table that requires horizontal scroll on mobile -->
+    <div class="card">
+      <h3>Order Details</h3>
+      <p class="mobile-scroll-hint">← Scroll horizontally to see full table →</p>
+      <div class="order-table-container">
+        <table class="order-table mobile-hostile-table">
+          <thead>
+            <tr>
+              <th>Order #</th>
+              <th>Date</th>
+              <th>Items</th>
+              <th>Shipping Method</th>
+              <th>Tracking Number</th>
+              <th>Status</th>
+              <th>Total</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>FP-2024-8847</td>
+              <td>Apr 23, 2024</td>
+              <td>Widget Pro, Gadget Plus (2)</td>
+              <td>Standard Shipping</td>
+              <td>1Z999AA10123456784</td>
+              <td><span style="color: var(--primary);">Out for Delivery</span></td>
+              <td>$219.96</td>
+              <td>
+                <button type="button" class="btn btn-secondary mobile-tiny-btn" onclick="alert('View details')">View</button>
+              </td>
+            </tr>
+            <tr>
+              <td>FP-2024-8502</td>
+              <td>Apr 15, 2024</td>
+              <td>Doohickey Basic</td>
+              <td>Express Shipping</td>
+              <td>1Z999AA10123456123</td>
+              <td><span style="color: var(--success);">Delivered</span></td>
+              <td>$39.98</td>
+              <td>
+                <button type="button" class="btn btn-secondary mobile-tiny-btn" onclick="alert('View details')">View</button>
+              </td>
+            </tr>
+            <tr>
+              <td>FP-2024-7891</td>
+              <td>Mar 28, 2024</td>
+              <td>Thingamajig XL, Gizmo Deluxe</td>
+              <td>Overnight Shipping</td>
+              <td>1Z999AA10123456789</td>
+              <td><span style="color: var(--success);">Delivered</span></td>
+              <td>$284.98</td>
+              <td>
+                <button type="button" class="btn btn-secondary mobile-tiny-btn" onclick="alert('View details')">View</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="order-result" class="card">
+      <h3>Order #FP-2024-8847 - Tracking</h3>
       <div style="margin-top: 1rem;">
         <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
           <div style="width: 24px; height: 24px; background: var(--success); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem;">✓</div>
@@ -61,13 +196,32 @@
     </div>
 
     <div style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
-      <a href="/account/" class="btn btn-secondary">My Account</a>
-      <a href="/shop/" class="btn btn-secondary">Continue Shopping</a>
-      <a href="/" class="btn btn-secondary">Back to Hub</a>
+      <a href="/account/" class="btn btn-secondary mobile-tiny-btn">Account</a>
+      <a href="/shop/" class="btn btn-secondary mobile-tiny-btn">Shop</a>
+      <a href="/" class="btn btn-secondary mobile-tiny-btn">Hub</a>
     </div>
   </div>
 
   <script>
+    // 4-second loading delay
+    let loadTime = 4;
+    const countdownEl = document.getElementById('load-countdown');
+    
+    const countdownInterval = setInterval(() => {
+      loadTime--;
+      if (loadTime > 0) {
+        countdownEl.textContent = `Please wait ${loadTime} second${loadTime !== 1 ? 's' : ''}`;
+      } else {
+        countdownEl.textContent = 'Loading complete!';
+      }
+    }, 1000);
+    
+    setTimeout(() => {
+      clearInterval(countdownInterval);
+      document.getElementById('loading-overlay').style.display = 'none';
+      document.getElementById('main-content').style.display = 'block';
+    }, 4000);
+
     function lookupOrder(event) {
       event.preventDefault();
       const orderNum = document.getElementById('order-number').value;

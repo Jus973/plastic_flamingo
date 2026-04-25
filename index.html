@@ -16,12 +16,12 @@
     </p>
 
     <div class="section">
-      <h2 class="section-title">Main Flows</h2>
+      <h2 class="section-title">Main Flows (with Persona-Targeted Friction)</h2>
       <ul class="nav-list">
         <li>
           <a href="/shop/">
             <span class="title">Shop</span>
-            <span class="desc">Start of the purchase flow - browse products</span>
+            <span class="desc">Competing CTAs, confusing categories (casual_browser frustration)</span>
           </a>
         </li>
         <li>
@@ -31,33 +31,33 @@
           </a>
         </li>
         <li>
-          <a href="/checkout/">
+          <a href="/checkout/shipping/">
             <span class="title">Checkout</span>
-            <span class="desc">End state for purchase with success message</span>
+            <span class="desc">Multi-step flow with delays (frustrated_exec frustration)</span>
           </a>
         </li>
         <li>
           <a href="/account/">
             <span class="title">Account</span>
-            <span class="desc">Account area index page</span>
+            <span class="desc">Nested hidden menus, icon-only actions (non_tech_senior + accessibility_user)</span>
           </a>
         </li>
         <li>
           <a href="/account/settings/">
             <span class="title">Account Settings</span>
-            <span class="desc">Notifications, password, preferences</span>
+            <span class="desc">Basic/Advanced mode toggle, deeply nested disclosures</span>
           </a>
         </li>
         <li>
           <a href="/signup/">
             <span class="title">Sign Up</span>
-            <span class="desc">Simple signup form with client-side confirmation</span>
+            <span class="desc">Aggressive validation, countdown timer (anxious_newbie frustration)</span>
           </a>
         </li>
         <li>
           <a href="/order-status/">
             <span class="title">Order Status</span>
-            <span class="desc">Order lookup by order number</span>
+            <span class="desc">Mobile-hostile layout, 4s delay (mobile_commuter frustration)</span>
           </a>
         </li>
       </ul>
@@ -75,7 +75,7 @@
         <li>
           <a href="/stress/rage-decoy/">
             <span class="title">Rage Decoy</span>
-            <span class="desc">Non-interactive elements that look clickable</span>
+            <span class="desc">Non-interactive elements that look clickable (rage_click trigger)</span>
           </a>
         </li>
         <li>
@@ -87,22 +87,100 @@
         <li>
           <a href="/stress/icon-bar/">
             <span class="title">Icon Bar</span>
-            <span class="desc">Icon-only actions vs labeled alternatives</span>
+            <span class="desc">Critical icon-only actions with limited labeled alternatives (accessibility_user)</span>
           </a>
         </li>
         <li>
           <a href="/stress/many-links/">
             <span class="title">Many Links</span>
-            <span class="desc">35+ interactive targets to stress sampling behavior</span>
+            <span class="desc">40+ interactive targets to stress 30-element sampling</span>
           </a>
         </li>
         <li>
           <a href="/stress/slow/">
             <span class="title">Slow Page</span>
-            <span class="desc">Delayed content for testing low-patience personas</span>
+            <span class="desc">10-second delay for testing low-patience personas</span>
+          </a>
+        </li>
+        <li>
+          <a href="/stress/edge-cases/">
+            <span class="title">Edge Cases</span>
+            <span class="desc">Inconsistent behaviors, dead ends, silent failures (power_user)</span>
+          </a>
+        </li>
+        <li>
+          <a href="/stress/broken-forms/">
+            <span class="title">Broken Forms</span>
+            <span class="desc">Subtly broken form elements for systematic testing (methodical_tester)</span>
           </a>
         </li>
       </ul>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">Persona Quick Reference</h2>
+      <div class="card">
+        <table style="width: 100%; font-size: 0.875rem; border-collapse: collapse;">
+          <thead>
+            <tr style="border-bottom: 2px solid var(--border);">
+              <th style="text-align: left; padding: 0.5rem;">Persona</th>
+              <th style="text-align: left; padding: 0.5rem;">Patience</th>
+              <th style="text-align: left; padding: 0.5rem;">Tech</th>
+              <th style="text-align: left; padding: 0.5rem;">Target Frustration</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid var(--border);">
+              <td style="padding: 0.5rem;"><code>frustrated_exec</code></td>
+              <td style="padding: 0.5rem;">0.2</td>
+              <td style="padding: 0.5rem;">0.8</td>
+              <td style="padding: 0.5rem;">Multi-step checkout</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border);">
+              <td style="padding: 0.5rem;"><code>non_tech_senior</code></td>
+              <td style="padding: 0.5rem;">0.5</td>
+              <td style="padding: 0.5rem;">0.2</td>
+              <td style="padding: 0.5rem;">Hidden menus, jargon</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border);">
+              <td style="padding: 0.5rem;"><code>power_user</code></td>
+              <td style="padding: 0.5rem;">0.9</td>
+              <td style="padding: 0.5rem;">0.9</td>
+              <td style="padding: 0.5rem;">Edge cases, dead ends</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border);">
+              <td style="padding: 0.5rem;"><code>casual_browser</code></td>
+              <td style="padding: 0.5rem;">0.5</td>
+              <td style="padding: 0.5rem;">0.5</td>
+              <td style="padding: 0.5rem;">Competing CTAs</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border);">
+              <td style="padding: 0.5rem;"><code>anxious_newbie</code></td>
+              <td style="padding: 0.5rem;">0.3</td>
+              <td style="padding: 0.5rem;">0.3</td>
+              <td style="padding: 0.5rem;">Scary validation</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border);">
+              <td style="padding: 0.5rem;"><code>methodical_tester</code></td>
+              <td style="padding: 0.5rem;">0.95</td>
+              <td style="padding: 0.5rem;">0.6</td>
+              <td style="padding: 0.5rem;">Broken forms</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border);">
+              <td style="padding: 0.5rem;"><code>mobile_commuter</code></td>
+              <td style="padding: 0.5rem;">0.25</td>
+              <td style="padding: 0.5rem;">0.85</td>
+              <td style="padding: 0.5rem;">Mobile-hostile UI</td>
+            </tr>
+            <tr>
+              <td style="padding: 0.5rem;"><code>accessibility_user</code></td>
+              <td style="padding: 0.5rem;">0.7</td>
+              <td style="padding: 0.5rem;">0.35</td>
+              <td style="padding: 0.5rem;">Icon-only actions</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <div class="footer">

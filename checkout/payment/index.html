@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment - Checkout - Flamboyance Playground</title>
+  <link rel="stylesheet" href="/src/style.css">
+  <style>
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .modal {
+      background: white;
+      border-radius: var(--radius);
+      padding: 2rem;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+    .modal h2 {
+      color: var(--warning);
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- Special Offer Modal - frustrating distraction -->
+  <div id="offer-modal" class="modal-overlay">
+    <div class="modal">
+      <h2>Wait! Special Offer!</h2>
+      <p style="margin-bottom: 1rem;">Add our Premium Protection Plan for only $29.99/year and get FREE extended warranty!</p>
+      <div style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;">
+        <button type="button" class="btn btn-primary" onclick="closeModal()">Yes, Add Protection</button>
+        <button type="button" class="btn btn-secondary" onclick="closeModal()">No Thanks</button>
+      </div>
+      <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 1rem;">
+        This offer expires when you leave this page!
+      </p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="/">Home</a> / <a href="/shop/">Shop</a> / <a href="/cart/">Cart</a> / <a href="/checkout/shipping/">Shipping</a> / Payment
+    </div>
+    
+    <h1>Payment Information</h1>
+    <p>Step 2 of 3: Enter your payment details</p>
+
+    <div class="card" style="max-width: 600px;">
+      <div style="display: flex; gap: 0.5rem; margin-bottom: 1.5rem;">
+        <div style="flex: 1; height: 4px; background: var(--success); border-radius: 2px;"></div>
+        <div style="flex: 1; height: 4px; background: var(--primary); border-radius: 2px;"></div>
+        <div style="flex: 1; height: 4px; background: var(--border); border-radius: 2px;"></div>
+      </div>
+
+      <form onsubmit="processPayment(event)">
+        <div class="form-group">
+          <label for="card-name">Name on Card *</label>
+          <input type="text" id="card-name" placeholder="Exactly as shown on card" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="card-number">Card Number *</label>
+          <input type="text" id="card-number" placeholder="1234 5678 9012 3456" required maxlength="19">
+        </div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label for="exp-month">Exp. Month *</label>
+            <select id="exp-month" required>
+              <option value="">MM</option>
+              <option value="01">01</option>
+              <option value="02">02</option>
+              <option value="03">03</option>
+              <option value="04">04</option>
+              <option value="05">05</option>
+              <option value="06">06</option>
+              <option value="07">07</option>
+              <option value="08">08</option>
+              <option value="09">09</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="12">12</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="exp-year">Exp. Year *</label>
+            <select id="exp-year" required>
+              <option value="">YYYY</option>
+              <option value="2024">2024</option>
+              <option value="2025">2025</option>
+              <option value="2026">2026</option>
+              <option value="2027">2027</option>
+              <option value="2028">2028</option>
+              <option value="2029">2029</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="cvv">CVV *</label>
+            <input type="text" id="cvv" placeholder="123" required maxlength="4" pattern="[0-9]{3,4}">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="billing-address">Billing Address</label>
+          <select id="billing-address">
+            <option value="same">Same as shipping address</option>
+            <option value="different">Use a different billing address</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>
+            <input type="checkbox"> Save this card for future purchases
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label>
+            <input type="checkbox" required> I agree to the Terms of Service and authorize this charge
+          </label>
+        </div>
+
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1.5rem;">
+          <a href="/checkout/shipping/" class="btn btn-secondary">Back to Shipping</a>
+          <button type="submit" class="btn btn-primary" id="submit-btn">Place Order - $219.96</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="card" style="margin-top: 1rem;">
+      <h3>Order Summary</h3>
+      <div style="font-size: 0.875rem;">
+        <div style="display: flex; justify-content: space-between; padding: 0.25rem 0; color: var(--text-muted);">
+          <span>Widget Pro × 1</span>
+          <span>$49.99</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; padding: 0.25rem 0; color: var(--text-muted);">
+          <span>Gadget Plus × 2</span>
+          <span>$159.98</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; padding: 0.25rem 0; color: var(--text-muted);">
+          <span>Shipping (Standard)</span>
+          <span>$9.99</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-top: 1px solid var(--border); margin-top: 0.5rem; font-weight: 600;">
+          <span>Total</span>
+          <span>$219.96</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Processing overlay -->
+    <div id="processing-overlay" class="loading-overlay" style="display: none;">
+      <div class="spinner"></div>
+      <p style="margin-top: 1rem; color: var(--text-muted);">Processing your payment...</p>
+      <p style="font-size: 0.875rem; color: var(--text-muted);">Please do not close this window.</p>
+    </div>
+  </div>
+
+  <script>
+    function closeModal() {
+      document.getElementById('offer-modal').style.display = 'none';
+    }
+
+    function processPayment(event) {
+      event.preventDefault();
+      const overlay = document.getElementById('processing-overlay');
+      overlay.style.display = 'flex';
+      
+      // 3-second delay before redirecting - frustrating for impatient users
+      setTimeout(() => {
+        window.location.href = '/checkout/';
+      }, 3000);
+    }
+  </script>
+</body>
+</html>

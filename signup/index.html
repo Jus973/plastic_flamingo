@@ -5,6 +5,85 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign Up - Flamboyance Playground</title>
   <link rel="stylesheet" href="/src/style.css">
+  <style>
+    .error-message {
+      color: var(--danger);
+      font-size: 0.75rem;
+      margin-top: 0.25rem;
+      display: none;
+    }
+    .error-message.visible {
+      display: block;
+    }
+    .field-error input {
+      border-color: var(--danger);
+      background: #fef2f2;
+    }
+    .password-requirements {
+      font-size: 0.75rem;
+      margin-top: 0.5rem;
+      padding: 0.5rem;
+      background: var(--bg);
+      border-radius: var(--radius);
+    }
+    .password-requirements li {
+      margin-bottom: 0.25rem;
+      color: var(--danger);
+    }
+    .password-requirements li.valid {
+      color: var(--success);
+    }
+    .session-timer {
+      background: #fef3c7;
+      border: 1px solid #f59e0b;
+      color: #92400e;
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius);
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .session-timer.urgent {
+      background: #fef2f2;
+      border-color: var(--danger);
+      color: var(--danger);
+    }
+    .captcha-box {
+      border: 1px solid var(--border);
+      padding: 1rem;
+      border-radius: var(--radius);
+      background: var(--bg);
+      margin: 1rem 0;
+    }
+    .captcha-checkbox {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .captcha-spinner {
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--border);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      display: none;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .email-warning {
+      background: #fef3c7;
+      border: 1px solid #f59e0b;
+      color: #92400e;
+      padding: 0.5rem;
+      border-radius: var(--radius);
+      font-size: 0.75rem;
+      margin-top: 0.25rem;
+      display: none;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -15,30 +94,75 @@
     <h1>Create Account</h1>
     <p>Sign up for a new account to start shopping.</p>
 
+    <!-- Session timeout warning -->
+    <div class="session-timer" id="session-timer">
+      <span>Your session will expire in:</span>
+      <strong id="timer-display">5:00</strong>
+    </div>
+
     <div class="card" style="max-width: 500px;">
-      <form id="signup-form" onsubmit="handleSignup(event)">
-        <div class="form-group">
-          <label for="name">Full Name</label>
-          <input type="text" id="name" placeholder="Enter your full name" required>
+      <form id="signup-form" onsubmit="handleSignup(event)" novalidate>
+        <div class="form-group" id="name-group">
+          <label for="name">Full Name *</label>
+          <input type="text" id="name" placeholder="Enter your full name" required
+                 onblur="validateName()" oninput="clearError('name')">
+          <div class="error-message" id="name-error">Please enter your full name (first and last name required)</div>
         </div>
-        <div class="form-group">
-          <label for="email">Email Address</label>
-          <input type="email" id="email" placeholder="Enter your email" required>
+
+        <div class="form-group" id="email-group">
+          <label for="email">Email Address *</label>
+          <input type="email" id="email" placeholder="Enter your email" required
+                 onblur="validateEmail()" oninput="clearError('email')">
+          <div class="error-message" id="email-error">Please enter a valid email address</div>
+          <div class="email-warning" id="email-warning">
+            ⚠️ This email may already be registered. Did you mean to <a href="/account/">sign in</a>?
+          </div>
         </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" id="password" placeholder="Create a password" required minlength="8">
+
+        <div class="form-group" id="password-group">
+          <label for="password">Password *</label>
+          <input type="password" id="password" placeholder="Create a password" required minlength="8"
+                 oninput="checkPasswordStrength()">
+          <div class="error-message" id="password-error">Password does not meet requirements</div>
+          <ul class="password-requirements" id="password-requirements">
+            <li id="req-length">At least 8 characters</li>
+            <li id="req-upper">At least one uppercase letter</li>
+            <li id="req-lower">At least one lowercase letter</li>
+            <li id="req-number">At least one number</li>
+            <li id="req-special">At least one special character (!@#$%^&*)</li>
+          </ul>
         </div>
-        <div class="form-group">
-          <label for="confirm">Confirm Password</label>
-          <input type="password" id="confirm" placeholder="Confirm your password" required>
+
+        <div class="form-group" id="confirm-group">
+          <label for="confirm">Confirm Password *</label>
+          <input type="password" id="confirm" placeholder="Confirm your password" required
+                 onblur="validateConfirm()" oninput="clearError('confirm')">
+          <div class="error-message" id="confirm-error">Passwords do not match</div>
         </div>
-        <div class="form-group">
+
+        <!-- Fake CAPTCHA that delays -->
+        <div class="captcha-box">
+          <div class="captcha-checkbox">
+            <input type="checkbox" id="captcha" onclick="verifyCaptcha(event)">
+            <div class="captcha-spinner" id="captcha-spinner"></div>
+            <label for="captcha" id="captcha-label">I'm not a robot</label>
+          </div>
+        </div>
+
+        <div class="form-group" id="terms-group">
           <label>
-            <input type="checkbox" required> I agree to the Terms of Service and Privacy Policy
+            <input type="checkbox" id="terms" required onchange="clearError('terms')"> 
+            I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a> *
           </label>
+          <div class="error-message" id="terms-error">You must agree to the terms to continue</div>
         </div>
-        <button type="submit" class="btn btn-primary" style="width: 100%;">Create Account</button>
+
+        <div class="warning-message" style="font-size: 0.875rem;">
+          <strong>Important:</strong> By creating an account, you consent to receive marketing communications. 
+          Your data may be shared with our partners. This action cannot be undone.
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%;" id="submit-btn">Create Account</button>
       </form>
       
       <div id="success-message" style="display: none;">
@@ -62,10 +186,147 @@
   </div>
 
   <script>
+    // Session timer countdown - creates anxiety
+    let timeRemaining = 300; // 5 minutes
+    const timerDisplay = document.getElementById('timer-display');
+    const timerContainer = document.getElementById('session-timer');
+    
+    setInterval(() => {
+      timeRemaining--;
+      const minutes = Math.floor(timeRemaining / 60);
+      const seconds = timeRemaining % 60;
+      timerDisplay.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+      
+      if (timeRemaining <= 60) {
+        timerContainer.classList.add('urgent');
+      }
+      
+      if (timeRemaining <= 0) {
+        timerDisplay.textContent = 'EXPIRED';
+      }
+    }, 1000);
+
+    function showError(field) {
+      document.getElementById(`${field}-group`).classList.add('field-error');
+      document.getElementById(`${field}-error`).classList.add('visible');
+    }
+
+    function clearError(field) {
+      document.getElementById(`${field}-group`).classList.remove('field-error');
+      document.getElementById(`${field}-error`).classList.remove('visible');
+    }
+
+    function validateName() {
+      const name = document.getElementById('name').value;
+      if (!name || name.split(' ').length < 2) {
+        showError('name');
+        return false;
+      }
+      return true;
+    }
+
+    function validateEmail() {
+      const email = document.getElementById('email').value;
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        showError('email');
+        return false;
+      }
+      // Always show the "already registered" warning - frustrating!
+      document.getElementById('email-warning').style.display = 'block';
+      return true;
+    }
+
+    function validateConfirm() {
+      const password = document.getElementById('password').value;
+      const confirm = document.getElementById('confirm').value;
+      if (password !== confirm) {
+        showError('confirm');
+        return false;
+      }
+      return true;
+    }
+
+    function checkPasswordStrength() {
+      const password = document.getElementById('password').value;
+      
+      const checks = {
+        'req-length': password.length >= 8,
+        'req-upper': /[A-Z]/.test(password),
+        'req-lower': /[a-z]/.test(password),
+        'req-number': /[0-9]/.test(password),
+        'req-special': /[!@#$%^&*]/.test(password)
+      };
+
+      let allValid = true;
+      for (const [id, valid] of Object.entries(checks)) {
+        const el = document.getElementById(id);
+        if (valid) {
+          el.classList.add('valid');
+        } else {
+          el.classList.remove('valid');
+          allValid = false;
+        }
+      }
+
+      if (!allValid && password.length > 0) {
+        showError('password');
+      } else {
+        clearError('password');
+      }
+
+      return allValid;
+    }
+
+    let captchaVerified = false;
+
+    function verifyCaptcha(event) {
+      event.preventDefault();
+      const checkbox = document.getElementById('captcha');
+      const spinner = document.getElementById('captcha-spinner');
+      const label = document.getElementById('captcha-label');
+      
+      checkbox.disabled = true;
+      spinner.style.display = 'block';
+      label.textContent = 'Verifying...';
+      
+      // 2 second delay to verify
+      setTimeout(() => {
+        spinner.style.display = 'none';
+        checkbox.checked = true;
+        checkbox.disabled = false;
+        label.textContent = 'Verified ✓';
+        label.style.color = 'var(--success)';
+        captchaVerified = true;
+      }, 2000);
+    }
+
     function handleSignup(event) {
       event.preventDefault();
-      document.getElementById('signup-form').style.display = 'none';
-      document.getElementById('success-message').style.display = 'block';
+      
+      let valid = true;
+      
+      if (!validateName()) valid = false;
+      if (!validateEmail()) valid = false;
+      if (!checkPasswordStrength()) valid = false;
+      if (!validateConfirm()) valid = false;
+      
+      if (!captchaVerified) {
+        alert('Please complete the CAPTCHA verification');
+        valid = false;
+      }
+      
+      const terms = document.getElementById('terms');
+      if (!terms.checked) {
+        showError('terms');
+        valid = false;
+      }
+      
+      if (valid) {
+        document.getElementById('signup-form').style.display = 'none';
+        document.getElementById('success-message').style.display = 'block';
+        document.getElementById('session-timer').style.display = 'none';
+      }
     }
   </script>
 </body>

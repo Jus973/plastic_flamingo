@@ -24,6 +24,20 @@
       background: var(--bg);
       border-color: var(--primary);
     }
+
+    .icon-action.primary {
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .icon-action.primary:hover {
+      background: var(--primary-hover);
+    }
+
+    .icon-action.danger {
+      background: var(--danger);
+      border-color: var(--danger);
+    }
     
     .toolbar {
       display: flex;
@@ -33,6 +47,7 @@
       border: 1px solid var(--border);
       border-radius: var(--radius);
       margin-bottom: 1rem;
+      flex-wrap: wrap;
     }
     
     .labeled-actions {
@@ -66,6 +81,14 @@
       width: 24px;
       text-align: center;
     }
+
+    .critical-actions {
+      background: #fef2f2;
+      border: 2px solid var(--danger);
+      padding: 1rem;
+      border-radius: var(--radius);
+      margin-top: 1.5rem;
+    }
   </style>
 </head>
 <body>
@@ -82,79 +105,131 @@
     </p>
 
     <div class="warning-message">
-      <strong>Scenario Goal:</strong> Perform actions like Save, Edit, Delete, and Share. 
-      The icon-only toolbar requires interpretation; the labeled alternatives are explicit.
+      <strong>Scenario Goal:</strong> Complete the workflow using the toolbar actions. 
+      Critical actions like Submit and Next are only available as icons. 
+      The <code>accessibility_user</code> will struggle to complete this task.
     </div>
 
     <div class="section">
-      <h2>Icon-Only Toolbar</h2>
+      <h2>Document Editor Toolbar</h2>
       <p>These buttons have icons only (with aria-labels for screen readers, but no visible text):</p>
       
       <div class="toolbar">
+        <button type="button" class="icon-action" aria-label="New Document" onclick="showAction('New Document')">
+          📄
+        </button>
+        <button type="button" class="icon-action" aria-label="Open" onclick="showAction('Open')">
+          📂
+        </button>
         <button type="button" class="icon-action" aria-label="Save" onclick="showAction('Save')">
           💾
         </button>
-        <button type="button" class="icon-action" aria-label="Edit" onclick="showAction('Edit')">
-          ✏️
+        <span style="width: 1px; background: var(--border); margin: 0 0.25rem;"></span>
+        <button type="button" class="icon-action" aria-label="Cut" onclick="showAction('Cut')">
+          ✂️
         </button>
-        <button type="button" class="icon-action" aria-label="Delete" onclick="showAction('Delete')">
-          🗑️
+        <button type="button" class="icon-action" aria-label="Copy" onclick="showAction('Copy')">
+          📋
         </button>
-        <button type="button" class="icon-action" aria-label="Share" onclick="showAction('Share')">
-          📤
+        <button type="button" class="icon-action" aria-label="Paste" onclick="showAction('Paste')">
+          📌
         </button>
-        <button type="button" class="icon-action" aria-label="Print" onclick="showAction('Print')">
-          🖨️
+        <span style="width: 1px; background: var(--border); margin: 0 0.25rem;"></span>
+        <button type="button" class="icon-action" aria-label="Undo" onclick="showAction('Undo')">
+          ↩️
         </button>
-        <button type="button" class="icon-action" aria-label="Download" onclick="showAction('Download')">
-          ⬇️
+        <button type="button" class="icon-action" aria-label="Redo" onclick="showAction('Redo')">
+          ↪️
         </button>
-        <button type="button" class="icon-action" aria-label="Settings" onclick="showAction('Settings')">
-          ⚙️
+        <span style="width: 1px; background: var(--border); margin: 0 0.25rem;"></span>
+        <button type="button" class="icon-action" aria-label="Bold" onclick="showAction('Bold')">
+          <strong>B</strong>
         </button>
-        <button type="button" class="icon-action" aria-label="Help" onclick="showAction('Help')">
-          ❓
+        <button type="button" class="icon-action" aria-label="Italic" onclick="showAction('Italic')">
+          <em>I</em>
         </button>
+        <button type="button" class="icon-action" aria-label="Underline" onclick="showAction('Underline')">
+          <u>U</u>
+        </button>
+      </div>
+
+      <!-- Critical action icons with no text alternatives -->
+      <div class="critical-actions">
+        <h3 style="color: var(--danger); margin-bottom: 0.75rem;">Critical Actions (Icon-Only)</h3>
+        <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 1rem;">
+          These actions are required to complete the workflow but have NO labeled alternatives.
+        </p>
+        <div class="toolbar" style="background: white;">
+          <button type="button" class="icon-action primary" aria-label="Submit" onclick="showAction('Submit - Document Submitted!')">
+            ✓
+          </button>
+          <button type="button" class="icon-action primary" aria-label="Next Step" onclick="showAction('Next Step')">
+            →
+          </button>
+          <button type="button" class="icon-action primary" aria-label="Approve" onclick="showAction('Approved!')">
+            👍
+          </button>
+          <button type="button" class="icon-action danger" aria-label="Reject" onclick="showAction('Rejected')">
+            👎
+          </button>
+          <button type="button" class="icon-action danger" aria-label="Cancel" onclick="showAction('Cancelled')">
+            ✕
+          </button>
+        </div>
       </div>
     </div>
 
-    <div class="section">
-      <h2>Labeled Actions (Accessible Alternative)</h2>
-      <p>The same actions with visible text labels:</p>
+    <div class="section" style="margin-top: 2rem;">
+      <h2>Partial Labeled Actions</h2>
+      <p>Only some actions have visible text labels (others were removed):</p>
       
       <div class="labeled-actions" style="max-width: 300px;">
         <button type="button" class="labeled-action" onclick="showAction('Save')">
           <span class="icon">💾</span>
           <span>Save (text)</span>
         </button>
-        <button type="button" class="labeled-action" onclick="showAction('Edit')">
-          <span class="icon">✏️</span>
-          <span>Edit (text)</span>
-        </button>
-        <button type="button" class="labeled-action" onclick="showAction('Delete')">
-          <span class="icon">🗑️</span>
-          <span>Delete (text)</span>
-        </button>
-        <button type="button" class="labeled-action" onclick="showAction('Share')">
-          <span class="icon">📤</span>
-          <span>Share (text)</span>
-        </button>
-        <button type="button" class="labeled-action" onclick="showAction('Print')">
-          <span class="icon">🖨️</span>
-          <span>Print (text)</span>
-        </button>
-        <button type="button" class="labeled-action" onclick="showAction('Download')">
-          <span class="icon">⬇️</span>
-          <span>Download (text)</span>
-        </button>
-        <button type="button" class="labeled-action" onclick="showAction('Settings')">
-          <span class="icon">⚙️</span>
-          <span>Settings (text)</span>
+        <button type="button" class="labeled-action" onclick="showAction('Open')">
+          <span class="icon">📂</span>
+          <span>Open (text)</span>
         </button>
         <button type="button" class="labeled-action" onclick="showAction('Help')">
           <span class="icon">❓</span>
           <span>Help (text)</span>
         </button>
+      </div>
+      
+      <p style="margin-top: 1rem; font-size: 0.875rem; color: var(--text-muted);">
+        <strong>Note:</strong> Submit, Next, Approve, Reject, and Cancel have no labeled versions. 
+        Users who prefer visible text cannot complete the workflow.
+      </p>
+    </div>
+
+    <div class="section" style="margin-top: 2rem;">
+      <h2>Quick Actions Panel</h2>
+      <p>A mixed panel where some critical actions are icon-only:</p>
+      
+      <div class="card">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <h3 style="margin-bottom: 0.25rem;">Document: Report_Q4_2024.docx</h3>
+            <p style="margin: 0; font-size: 0.875rem; color: var(--text-muted);">Last modified: 2 hours ago</p>
+          </div>
+          <div style="display: flex; gap: 0.5rem;">
+            <!-- These are icon-only with no labeled alternatives -->
+            <button type="button" class="icon-action" aria-label="Share" onclick="showAction('Share')">
+              📤
+            </button>
+            <button type="button" class="icon-action" aria-label="Download" onclick="showAction('Download')">
+              ⬇️
+            </button>
+            <button type="button" class="icon-action" aria-label="Delete" onclick="showAction('Delete')">
+              🗑️
+            </button>
+            <button type="button" class="icon-action primary" aria-label="Edit" onclick="showAction('Edit')">
+              ✏️
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 

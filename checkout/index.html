@@ -3,16 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Checkout - Flamboyance Playground</title>
+  <title>Order Confirmed - Flamboyance Playground</title>
   <link rel="stylesheet" href="/src/style.css">
 </head>
 <body>
   <div class="container">
     <div class="breadcrumb">
-      <a href="/">Home</a> / <a href="/shop/">Shop</a> / <a href="/cart/">Cart</a> / Checkout
+      <a href="/">Home</a> / <a href="/shop/">Shop</a> / <a href="/cart/">Cart</a> / Order Confirmed
     </div>
     
-    <h1>Checkout Complete</h1>
+    <h1>Order Confirmed!</h1>
+    <p>Step 3 of 3: Order complete</p>
+
+    <div class="card" style="max-width: 600px;">
+      <div style="display: flex; gap: 0.5rem; margin-bottom: 1.5rem;">
+        <div style="flex: 1; height: 4px; background: var(--success); border-radius: 2px;"></div>
+        <div style="flex: 1; height: 4px; background: var(--success); border-radius: 2px;"></div>
+        <div style="flex: 1; height: 4px; background: var(--success); border-radius: 2px;"></div>
+      </div>
+    </div>
     
     <div class="success-message">
       <strong>Thank you for your order!</strong>
@@ -34,14 +43,22 @@
           <span>$159.98</span>
         </div>
         <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--border);">
-          <span>Shipping</span>
+          <span>Shipping (Standard)</span>
           <span>$9.99</span>
         </div>
         <div style="display: flex; justify-content: space-between; padding: 0.75rem 0; font-weight: 600; font-size: 1.125rem;">
-          <span>Total</span>
+          <span>Total Charged</span>
           <span>$219.96</span>
         </div>
       </div>
+    </div>
+
+    <div class="card">
+      <h3>Shipping Details</h3>
+      <p style="margin-bottom: 0.25rem;"><strong>John Doe</strong></p>
+      <p style="margin-bottom: 0.25rem; color: var(--text-muted);">123 Main Street, Apt 4B</p>
+      <p style="margin-bottom: 0.25rem; color: var(--text-muted);">New York, NY 10001</p>
+      <p style="margin-bottom: 0; color: var(--text-muted);">Estimated delivery: 5-7 business days</p>
     </div>
 
     <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">

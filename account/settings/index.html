@@ -5,6 +5,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Account Settings - Flamboyance Playground</title>
   <link rel="stylesheet" href="/src/style.css">
+  <style>
+    .mode-toggle {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      padding: 0.5rem;
+      background: var(--bg);
+      border-radius: var(--radius);
+    }
+    .mode-toggle button {
+      flex: 1;
+      padding: 0.5rem 1rem;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      border-radius: var(--radius);
+      font-weight: 500;
+    }
+    .mode-toggle button.active {
+      background: var(--primary);
+      color: white;
+    }
+    .basic-content { display: block; }
+    .advanced-content { display: none; }
+    body.advanced-mode .basic-content { display: none; }
+    body.advanced-mode .advanced-content { display: block; }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -15,71 +42,242 @@
     <h1>Account Settings</h1>
     <p>Manage your notifications, password, and preferences.</p>
 
-    <div class="card">
-      <h3>Notification Preferences</h3>
-      <div class="form-group" style="margin-top: 1rem;">
-        <label>
-          <input type="checkbox" checked> Email notifications for order updates
-        </label>
-      </div>
-      <div class="form-group">
-        <label>
-          <input type="checkbox" checked> Marketing emails and promotions
-        </label>
-      </div>
-      <div class="form-group">
-        <label>
-          <input type="checkbox"> SMS notifications
-        </label>
-      </div>
-      <button type="button" class="btn btn-primary">Save Notifications</button>
+    <!-- Confusing mode toggle -->
+    <div class="mode-toggle">
+      <button type="button" class="active" onclick="setMode('basic')">Basic Mode</button>
+      <button type="button" onclick="setMode('advanced')">Advanced Mode</button>
     </div>
 
-    <div class="card">
-      <h3>Change Password</h3>
-      <form onsubmit="event.preventDefault(); alert('Password updated!');">
-        <div class="form-group">
-          <label for="current-password">Current Password</label>
-          <input type="password" id="current-password" placeholder="Enter current password">
+    <!-- Basic Mode Content -->
+    <div class="basic-content">
+      <div class="card">
+        <h3>Notification Preferences</h3>
+        <div class="form-group" style="margin-top: 1rem;">
+          <label>
+            <input type="checkbox" checked> Email notifications for order updates
+          </label>
         </div>
         <div class="form-group">
-          <label for="new-password">New Password</label>
-          <input type="password" id="new-password" placeholder="Enter new password">
+          <label>
+            <input type="checkbox" checked> Marketing emails and promotions
+          </label>
         </div>
         <div class="form-group">
-          <label for="confirm-password">Confirm New Password</label>
-          <input type="password" id="confirm-password" placeholder="Confirm new password">
+          <label>
+            <input type="checkbox"> SMS notifications
+          </label>
         </div>
-        <button type="submit" class="btn btn-primary">Update Password</button>
-      </form>
+        <button type="button" class="btn btn-primary">Save Notifications</button>
+      </div>
+
+      <div class="card">
+        <h3>Change Password</h3>
+        <form onsubmit="event.preventDefault(); alert('Password updated!');">
+          <div class="form-group">
+            <label for="current-password">Current Password</label>
+            <input type="password" id="current-password" placeholder="Enter current password">
+          </div>
+          <div class="form-group">
+            <label for="new-password">New Password</label>
+            <input type="password" id="new-password" placeholder="Enter new password">
+          </div>
+          <div class="form-group">
+            <label for="confirm-password">Confirm New Password</label>
+            <input type="password" id="confirm-password" placeholder="Confirm new password">
+          </div>
+          <button type="submit" class="btn btn-primary">Update Password</button>
+        </form>
+      </div>
+
+      <div class="warning-message">
+        <strong>Looking for more options?</strong>
+        <p style="margin-bottom: 0;">Switch to Advanced Mode to access all settings.</p>
+      </div>
     </div>
 
-    <div class="card">
-      <h3>Display Preferences</h3>
-      <div class="form-group">
-        <label for="language">Language</label>
-        <select id="language">
-          <option value="en">English</option>
-          <option value="es">Español</option>
-          <option value="fr">Français</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="timezone">Timezone</label>
-        <select id="timezone">
-          <option value="pst">Pacific Time (PT)</option>
-          <option value="mst">Mountain Time (MT)</option>
-          <option value="cst">Central Time (CT)</option>
-          <option value="est">Eastern Time (ET)</option>
-        </select>
-      </div>
-      <button type="button" class="btn btn-primary">Save Preferences</button>
-    </div>
+    <!-- Advanced Mode Content - lots of nested disclosures -->
+    <div class="advanced-content">
+      <div class="card">
+        <h3>Settings Categories</h3>
+        <p style="color: var(--text-muted); font-size: 0.875rem;">Expand each section to configure settings.</p>
+        
+        <!-- Notifications - nested disclosure -->
+        <div class="disclosure" style="margin-top: 1rem;">
+          <button 
+            type="button" 
+            class="disclosure-trigger" 
+            aria-expanded="false" 
+            aria-controls="notif-settings"
+            onclick="toggleDisclosure(this)"
+          >
+            <span>Notification & Communication Settings</span>
+            <span class="disclosure-arrow">▼</span>
+          </button>
+          <div id="notif-settings" class="disclosure-content">
+            <div class="disclosure" style="margin-top: 0.5rem;">
+              <button 
+                type="button" 
+                class="disclosure-trigger" 
+                aria-expanded="false" 
+                aria-controls="email-notif"
+                onclick="toggleDisclosure(this)"
+                style="background: var(--bg);"
+              >
+                <span>Email Notifications</span>
+                <span class="disclosure-arrow">▼</span>
+              </button>
+              <div id="email-notif" class="disclosure-content">
+                <div class="form-group">
+                  <label><input type="checkbox" checked> Order updates</label>
+                </div>
+                <div class="form-group">
+                  <label><input type="checkbox" checked> Marketing emails</label>
+                </div>
+                <div class="form-group">
+                  <label><input type="checkbox"> Weekly digest</label>
+                </div>
+              </div>
+            </div>
+            
+            <div class="disclosure" style="margin-top: 0.5rem;">
+              <button 
+                type="button" 
+                class="disclosure-trigger" 
+                aria-expanded="false" 
+                aria-controls="push-notif"
+                onclick="toggleDisclosure(this)"
+                style="background: var(--bg);"
+              >
+                <span>Push Notifications (Browser)</span>
+                <span class="disclosure-arrow">▼</span>
+              </button>
+              <div id="push-notif" class="disclosure-content">
+                <div class="form-group">
+                  <label><input type="checkbox"> Enable push notifications</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-    <div class="card" style="border-color: var(--danger);">
-      <h3 style="color: var(--danger);">Danger Zone</h3>
-      <p>Permanently delete your account and all associated data.</p>
-      <button type="button" class="btn btn-danger" onclick="alert('Account deletion is disabled in this demo.')">Delete Account</button>
+        <!-- Security - nested disclosure -->
+        <div class="disclosure" style="margin-top: 0.5rem;">
+          <button 
+            type="button" 
+            class="disclosure-trigger" 
+            aria-expanded="false" 
+            aria-controls="security-settings"
+            onclick="toggleDisclosure(this)"
+          >
+            <span>Security & Authentication</span>
+            <span class="disclosure-arrow">▼</span>
+          </button>
+          <div id="security-settings" class="disclosure-content">
+            <div class="disclosure" style="margin-top: 0.5rem;">
+              <button 
+                type="button" 
+                class="disclosure-trigger" 
+                aria-expanded="false" 
+                aria-controls="password-section"
+                onclick="toggleDisclosure(this)"
+                style="background: var(--bg);"
+              >
+                <span>Password Management</span>
+                <span class="disclosure-arrow">▼</span>
+              </button>
+              <div id="password-section" class="disclosure-content">
+                <form onsubmit="event.preventDefault(); alert('Password updated!');">
+                  <div class="form-group">
+                    <label for="adv-current-password">Current Password</label>
+                    <input type="password" id="adv-current-password" placeholder="Enter current password">
+                  </div>
+                  <div class="form-group">
+                    <label for="adv-new-password">New Password</label>
+                    <input type="password" id="adv-new-password" placeholder="Enter new password">
+                  </div>
+                  <div class="form-group">
+                    <label for="adv-confirm-password">Confirm New Password</label>
+                    <input type="password" id="adv-confirm-password" placeholder="Confirm new password">
+                  </div>
+                  <button type="submit" class="btn btn-primary">Update Password</button>
+                </form>
+              </div>
+            </div>
+            
+            <div class="disclosure" style="margin-top: 0.5rem;">
+              <button 
+                type="button" 
+                class="disclosure-trigger" 
+                aria-expanded="false" 
+                aria-controls="mfa-section"
+                onclick="toggleDisclosure(this)"
+                style="background: var(--bg);"
+              >
+                <span>Multi-Factor Authentication (MFA)</span>
+                <span class="disclosure-arrow">▼</span>
+              </button>
+              <div id="mfa-section" class="disclosure-content">
+                <p style="color: var(--text-muted);">MFA is not enabled.</p>
+                <button type="button" class="btn btn-secondary" onclick="alert('MFA setup not available')">Enable MFA</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Display - nested disclosure -->
+        <div class="disclosure" style="margin-top: 0.5rem;">
+          <button 
+            type="button" 
+            class="disclosure-trigger" 
+            aria-expanded="false" 
+            aria-controls="display-settings"
+            onclick="toggleDisclosure(this)"
+          >
+            <span>Display & Localization</span>
+            <span class="disclosure-arrow">▼</span>
+          </button>
+          <div id="display-settings" class="disclosure-content">
+            <div class="form-group">
+              <label for="adv-language">Language</label>
+              <select id="adv-language">
+                <option value="en">English</option>
+                <option value="es">Español</option>
+                <option value="fr">Français</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="adv-timezone">Timezone</label>
+              <select id="adv-timezone">
+                <option value="pst">Pacific Time (PT)</option>
+                <option value="mst">Mountain Time (MT)</option>
+                <option value="cst">Central Time (CT)</option>
+                <option value="est">Eastern Time (ET)</option>
+              </select>
+            </div>
+            <button type="button" class="btn btn-primary">Save Preferences</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="border-color: var(--danger);">
+        <div class="disclosure">
+          <button 
+            type="button" 
+            class="disclosure-trigger" 
+            aria-expanded="false" 
+            aria-controls="danger-zone"
+            onclick="toggleDisclosure(this)"
+            style="color: var(--danger);"
+          >
+            <span>Danger Zone</span>
+            <span class="disclosure-arrow">▼</span>
+          </button>
+          <div id="danger-zone" class="disclosure-content">
+            <p>Permanently delete your account and all associated data.</p>
+            <button type="button" class="btn btn-danger" onclick="alert('Account deletion is disabled in this demo.')">Delete Account</button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
@@ -87,5 +285,29 @@
       <a href="/" class="btn btn-secondary">Back to Hub</a>
     </div>
   </div>
+
+  <script>
+    function setMode(mode) {
+      const buttons = document.querySelectorAll('.mode-toggle button');
+      buttons.forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      
+      if (mode === 'advanced') {
+        document.body.classList.add('advanced-mode');
+      } else {
+        document.body.classList.remove('advanced-mode');
+      }
+    }
+
+    function toggleDisclosure(button) {
+      const expanded = button.getAttribute('aria-expanded') === 'true';
+      button.setAttribute('aria-expanded', !expanded);
+      const contentId = button.getAttribute('aria-controls');
+      const content = document.getElementById(contentId);
+      if (content) {
+        content.classList.toggle('open', !expanded);
+      }
+    }
+  </script>
 </body>
 </html>

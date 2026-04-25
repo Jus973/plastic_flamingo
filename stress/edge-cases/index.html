@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edge Cases - Flamboyance Playground</title>
+  <link rel="stylesheet" href="/src/style.css">
+  <style>
+    .edge-case-card {
+      border-left: 4px solid var(--warning);
+    }
+    .items-container {
+      min-height: 100px;
+      border: 1px dashed var(--border);
+      border-radius: var(--radius);
+      padding: 1rem;
+      margin-top: 0.5rem;
+    }
+    .item {
+      padding: 0.5rem;
+      background: var(--bg);
+      border-radius: var(--radius);
+      margin-bottom: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="/">Home</a> / Stress Tests / Edge Cases
+    </div>
+    
+    <h1>Edge Cases Test</h1>
+    <p>
+      This scenario contains intentionally inconsistent behaviors and edge cases 
+      that a thorough <code>power_user</code> would notice during exploration.
+    </p>
+
+    <div class="warning-message">
+      <strong>Scenario Goal:</strong> Test edge cases, dead ends, and inconsistent UI behavior 
+      that would frustrate a user trying to systematically explore all features.
+    </div>
+
+    <!-- Button that changes label but does nothing -->
+    <div class="card edge-case-card">
+      <h3>Inconsistent Button</h3>
+      <p>This button changes its label when clicked, but doesn't perform any action.</p>
+      <button type="button" class="btn btn-primary" id="changing-btn" onclick="changeButtonLabel()">
+        Click to Continue
+      </button>
+      <p id="btn-status" style="margin-top: 0.5rem; font-size: 0.875rem; color: var(--text-muted);"></p>
+    </div>
+
+    <!-- Link that goes to 404 -->
+    <div class="card edge-case-card">
+      <h3>Dead End Link</h3>
+      <p>This link appears valid but leads to a non-existent page.</p>
+      <a href="/features/premium-dashboard/" class="btn btn-secondary">View Premium Dashboard</a>
+      <a href="/api/v2/docs/" class="btn btn-secondary" style="margin-left: 0.5rem;">API Documentation</a>
+    </div>
+
+    <!-- Form that silently fails -->
+    <div class="card edge-case-card">
+      <h3>Silent Failure Form</h3>
+      <p>This form appears to submit but validation silently fails without feedback.</p>
+      <form id="silent-form" onsubmit="silentFailure(event)">
+        <div class="form-group">
+          <label for="silent-email">Email Address</label>
+          <input type="text" id="silent-email" placeholder="Enter your email">
+        </div>
+        <div class="form-group">
+          <label for="silent-code">Promo Code</label>
+          <input type="text" id="silent-code" placeholder="Enter promo code">
+        </div>
+        <button type="submit" class="btn btn-primary">Apply Code</button>
+        <span id="form-spinner" style="display: none; margin-left: 0.5rem;">Processing...</span>
+      </form>
+    </div>
+
+    <!-- Dropdown that resets -->
+    <div class="card edge-case-card">
+      <h3>Resetting Dropdown</h3>
+      <p>This dropdown resets to its default value if you click outside before confirming.</p>
+      <div class="form-group">
+        <label for="resetting-select">Select an option:</label>
+        <select id="resetting-select" onblur="resetDropdown()">
+          <option value="">-- Choose an option --</option>
+          <option value="option1">Option 1: Standard</option>
+          <option value="option2">Option 2: Premium</option>
+          <option value="option3">Option 3: Enterprise</option>
+        </select>
+      </div>
+      <button type="button" class="btn btn-primary" onclick="confirmSelection()">Confirm Selection</button>
+      <p id="selection-status" style="margin-top: 0.5rem; font-size: 0.875rem; color: var(--text-muted);"></p>
+    </div>
+
+    <!-- Load More that loads duplicates -->
+    <div class="card edge-case-card">
+      <h3>Load More (Duplicates)</h3>
+      <p>The "Load More" button loads items, but they're duplicates of existing ones.</p>
+      <div class="items-container" id="items-container">
+        <div class="item">Item 1: Widget Pro</div>
+        <div class="item">Item 2: Gadget Plus</div>
+        <div class="item">Item 3: Doohickey Basic</div>
+      </div>
+      <button type="button" class="btn btn-secondary" onclick="loadMoreItems()" style="margin-top: 0.5rem;">
+        Load More Items
+      </button>
+      <span id="load-count" style="margin-left: 0.5rem; font-size: 0.875rem; color: var(--text-muted);">
+        Showing 3 items
+      </span>
+    </div>
+
+    <!-- Toggle that doesn't persist -->
+    <div class="card edge-case-card">
+      <h3>Non-Persistent Toggle</h3>
+      <p>This toggle appears to save your preference but reverts after a moment.</p>
+      <div class="form-group">
+        <label>
+          <input type="checkbox" id="persist-toggle" onchange="togglePersistence()"> 
+          Enable notifications
+        </label>
+      </div>
+      <p id="toggle-status" style="font-size: 0.875rem; color: var(--text-muted);">Status: Disabled</p>
+    </div>
+
+    <!-- Counter with inconsistent increment -->
+    <div class="card edge-case-card">
+      <h3>Inconsistent Counter</h3>
+      <p>The increment button sometimes adds 1, sometimes adds 2.</p>
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <button type="button" class="btn btn-secondary" onclick="decrementCounter()">-</button>
+        <span id="counter-value" style="font-size: 1.5rem; font-weight: 600; min-width: 60px; text-align: center;">0</span>
+        <button type="button" class="btn btn-secondary" onclick="incrementCounter()">+</button>
+      </div>
+      <p style="margin-top: 0.5rem; font-size: 0.875rem; color: var(--text-muted);">
+        Try clicking + multiple times...
+      </p>
+    </div>
+
+    <div class="footer" style="margin-top: 2rem;">
+      <a href="/" class="btn btn-secondary">Back to Hub</a>
+    </div>
+  </div>
+
+  <script>
+    let buttonClicks = 0;
+    const buttonLabels = ['Click to Continue', 'Processing...', 'Please Wait...', 'Almost Done...', 'Try Again'];
+    
+    function changeButtonLabel() {
+      buttonClicks++;
+      const btn = document.getElementById('changing-btn');
+      const status = document.getElementById('btn-status');
+      btn.textContent = buttonLabels[buttonClicks % buttonLabels.length];
+      status.textContent = `Clicked ${buttonClicks} time(s). Nothing happened.`;
+    }
+
+    function silentFailure(event) {
+      event.preventDefault();
+      const spinner = document.getElementById('form-spinner');
+      spinner.style.display = 'inline';
+      setTimeout(() => {
+        spinner.style.display = 'none';
+      }, 1500);
+    }
+
+    function resetDropdown() {
+      setTimeout(() => {
+        const select = document.getElementById('resetting-select');
+        if (select.value !== '') {
+          select.value = '';
+          document.getElementById('selection-status').textContent = 'Selection was reset. Try confirming faster!';
+        }
+      }, 500);
+    }
+
+    function confirmSelection() {
+      const select = document.getElementById('resetting-select');
+      const status = document.getElementById('selection-status');
+      if (select.value) {
+        status.textContent = `Confirmed: ${select.options[select.selectedIndex].text}`;
+        status.style.color = 'var(--success)';
+      } else {
+        status.textContent = 'No selection to confirm.';
+        status.style.color = 'var(--danger)';
+      }
+    }
+
+    let itemCount = 3;
+    function loadMoreItems() {
+      const container = document.getElementById('items-container');
+      const existingItems = ['Widget Pro', 'Gadget Plus', 'Doohickey Basic'];
+      
+      for (let i = 0; i < 3; i++) {
+        itemCount++;
+        const item = document.createElement('div');
+        item.className = 'item';
+        item.textContent = `Item ${itemCount}: ${existingItems[i % 3]}`;
+        container.appendChild(item);
+      }
+      
+      document.getElementById('load-count').textContent = `Showing ${itemCount} items (${itemCount - 3} duplicates)`;
+    }
+
+    function togglePersistence() {
+      const toggle = document.getElementById('persist-toggle');
+      const status = document.getElementById('toggle-status');
+      
+      if (toggle.checked) {
+        status.textContent = 'Status: Enabled (saving...)';
+        status.style.color = 'var(--success)';
+        
+        setTimeout(() => {
+          toggle.checked = false;
+          status.textContent = 'Status: Disabled (save failed)';
+          status.style.color = 'var(--danger)';
+        }, 1500);
+      } else {
+        status.textContent = 'Status: Disabled';
+        status.style.color = 'var(--text-muted)';
+      }
+    }
+
+    let counterValue = 0;
+    let clickCount = 0;
+    
+    function incrementCounter() {
+      clickCount++;
+      const increment = (clickCount % 3 === 0) ? 2 : 1;
+      counterValue += increment;
+      document.getElementById('counter-value').textContent = counterValue;
+    }
+    
+    function decrementCounter() {
+      counterValue = Math.max(0, counterValue - 1);
+      document.getElementById('counter-value').textContent = counterValue;
+    }
+  </script>
+</body>
+</html>

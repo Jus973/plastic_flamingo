@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Broken Forms - Flamboyance Playground</title>
+  <link rel="stylesheet" href="/src/style.css">
+  <style>
+    .form-section {
+      border-left: 4px solid var(--danger);
+      margin-bottom: 1.5rem;
+    }
+    .scroll-container {
+      max-height: 150px;
+      overflow-y: auto;
+      border: 1px solid var(--border);
+      padding: 1rem;
+      border-radius: var(--radius);
+      margin-bottom: 1rem;
+    }
+    .scroll-container p {
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="/">Home</a> / Stress Tests / Broken Forms
+    </div>
+    
+    <h1>Broken Forms Test</h1>
+    <p>
+      This scenario contains subtly broken form elements that a thorough 
+      <code>methodical_tester</code> would discover when systematically testing every form.
+    </p>
+
+    <div class="warning-message">
+      <strong>Scenario Goal:</strong> Each form has a subtle bug or broken behavior 
+      that becomes apparent only when you actually try to use it properly.
+    </div>
+
+    <!-- Form 1: Mismatched label/input IDs -->
+    <div class="card form-section">
+      <h3>Contact Form (Broken Labels)</h3>
+      <p style="font-size: 0.875rem; color: var(--text-muted);">
+        Try clicking the labels - they don't focus the inputs.
+      </p>
+      <form onsubmit="event.preventDefault(); alert('Form submitted!')">
+        <div class="form-group">
+          <!-- Intentionally wrong: for="name" but id="contact-name" -->
+          <label for="name">Your Name</label>
+          <input type="text" id="contact-name" placeholder="Enter your name">
+        </div>
+        <div class="form-group">
+          <!-- Intentionally wrong: for="email" but id="contact-email" -->
+          <label for="email">Email Address</label>
+          <input type="email" id="contact-email" placeholder="Enter your email">
+        </div>
+        <div class="form-group">
+          <!-- Intentionally wrong: for="message" but id="contact-message" -->
+          <label for="message">Message</label>
+          <textarea id="contact-message" rows="3" placeholder="Enter your message"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Send Message</button>
+      </form>
+    </div>
+
+    <!-- Form 2: Submit disabled until scroll -->
+    <div class="card form-section">
+      <h3>Terms Agreement (Scroll to Enable)</h3>
+      <p style="font-size: 0.875rem; color: var(--text-muted);">
+        You must scroll to the bottom of the terms to enable the submit button.
+      </p>
+      <form onsubmit="event.preventDefault(); alert('Terms accepted!')">
+        <div class="scroll-container" id="terms-scroll" onscroll="checkScroll()">
+          <p><strong>Terms of Service</strong></p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+          <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+          <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
+          <p>Totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+          <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.</p>
+          <p id="terms-end">--- End of Terms ---</p>
+        </div>
+        <div class="form-group">
+          <label>
+            <input type="checkbox" id="terms-agree" required> I have read and agree to the terms
+          </label>
+        </div>
+        <button type="submit" class="btn btn-primary" id="terms-submit" disabled>Accept Terms</button>
+        <span style="font-size: 0.75rem; color: var(--text-muted); margin-left: 0.5rem;">
+          (Scroll to bottom to enable)
+        </span>
+      </form>
+    </div>
+
+    <!-- Form 3: Required field with no indicator -->
+    <div class="card form-section">
+      <h3>Subscription Form (Hidden Required Field)</h3>
+      <p style="font-size: 0.875rem; color: var(--text-muted);">
+        One of these fields is required but has no visual indicator.
+      </p>
+      <form onsubmit="return validateSubscription(event)">
+        <div class="form-group">
+          <label for="sub-email">Email</label>
+          <input type="email" id="sub-email" placeholder="your@email.com">
+        </div>
+        <div class="form-group">
+          <label for="sub-name">Name (optional)</label>
+          <input type="text" id="sub-name" placeholder="Your name">
+        </div>
+        <div class="form-group">
+          <!-- This looks optional but is actually required -->
+          <label for="sub-phone">Phone</label>
+          <input type="tel" id="sub-phone" placeholder="Phone number" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Subscribe</button>
+      </form>
+    </div>
+
+    <!-- Form 4: Checkbox that unchecks itself -->
+    <div class="card form-section">
+      <h3>Newsletter Preferences (Self-Unchecking)</h3>
+      <p style="font-size: 0.875rem; color: var(--text-muted);">
+        These checkboxes appear to save but revert after a moment.
+      </p>
+      <form onsubmit="event.preventDefault(); alert('Preferences saved!')">
+        <div class="form-group">
+          <label>
+            <input type="checkbox" id="news-weekly" onchange="uncheckAfterDelay(this)"> 
+            Weekly newsletter
+          </label>
+        </div>
+        <div class="form-group">
+          <label>
+            <input type="checkbox" id="news-promo" onchange="uncheckAfterDelay(this)"> 
+            Promotional offers
+          </label>
+        </div>
+        <div class="form-group">
+          <label>
+            <input type="checkbox" id="news-updates" onchange="uncheckAfterDelay(this)"> 
+            Product updates
+          </label>
+        </div>
+        <button type="submit" class="btn btn-primary">Save Preferences</button>
+        <p id="uncheck-notice" style="font-size: 0.75rem; color: var(--danger); margin-top: 0.5rem; display: none;">
+          Selection was reset. Please try again.
+        </p>
+      </form>
+    </div>
+
+    <!-- Form 5: Select with bad default -->
+    <div class="card form-section">
+      <h3>Shipping Options (Bad Default)</h3>
+      <p style="font-size: 0.875rem; color: var(--text-muted);">
+        The dropdown has a "Select..." placeholder that submits as an empty value.
+      </p>
+      <form onsubmit="return validateShipping(event)">
+        <div class="form-group">
+          <label for="ship-method">Shipping Method</label>
+          <select id="ship-method" required>
+            <!-- This looks like a placeholder but is actually an option that can be submitted -->
+            <option value="">-- Select shipping method --</option>
+            <option value="standard">Standard (5-7 days)</option>
+            <option value="express">Express (2-3 days)</option>
+            <option value="overnight">Overnight</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="ship-address">Delivery Address</label>
+          <input type="text" id="ship-address" placeholder="Enter address" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Calculate Shipping</button>
+      </form>
+    </div>
+
+    <!-- Form 6: Radio buttons with same name but broken grouping -->
+    <div class="card form-section">
+      <h3>Payment Method (Broken Radio Group)</h3>
+      <p style="font-size: 0.875rem; color: var(--text-muted);">
+        Radio buttons appear grouped but don't behave correctly.
+      </p>
+      <form onsubmit="event.preventDefault(); alert('Payment selected!')">
+        <div class="form-group">
+          <label>Select payment method:</label>
+          <div style="margin-top: 0.5rem;">
+            <label style="display: block; margin-bottom: 0.5rem;">
+              <!-- Different name attributes break the radio group -->
+              <input type="radio" name="payment-card" value="credit"> Credit Card
+            </label>
+            <label style="display: block; margin-bottom: 0.5rem;">
+              <input type="radio" name="payment-paypal" value="paypal"> PayPal
+            </label>
+            <label style="display: block; margin-bottom: 0.5rem;">
+              <input type="radio" name="payment-bank" value="bank"> Bank Transfer
+            </label>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Continue to Payment</button>
+      </form>
+    </div>
+
+    <div class="footer" style="margin-top: 2rem;">
+      <a href="/" class="btn btn-secondary">Back to Hub</a>
+    </div>
+  </div>
+
+  <script>
+    function checkScroll() {
+      const container = document.getElementById('terms-scroll');
+      const submitBtn = document.getElementById('terms-submit');
+      
+      // Check if scrolled near the bottom
+      if (container.scrollTop + container.clientHeight >= container.scrollHeight - 10) {
+        submitBtn.disabled = false;
+      }
+    }
+
+    function validateSubscription(event) {
+      event.preventDefault();
+      const phone = document.getElementById('sub-phone').value;
+      if (!phone) {
+        alert('Please fill in all required fields');
+        return false;
+      }
+      alert('Subscribed successfully!');
+      return false;
+    }
+
+    function uncheckAfterDelay(checkbox) {
+      if (checkbox.checked) {
+        setTimeout(() => {
+          checkbox.checked = false;
+          document.getElementById('uncheck-notice').style.display = 'block';
+          setTimeout(() => {
+            document.getElementById('uncheck-notice').style.display = 'none';
+          }, 2000);
+        }, 1000);
+      }
+    }
+
+    function validateShipping(event) {
+      event.preventDefault();
+      const method = document.getElementById('ship-method').value;
+      if (!method) {
+        alert('Please select a shipping method');
+        return false;
+      }
+      alert(`Shipping calculated for: ${method}`);
+      return false;
+    }
+  </script>
+</body>
+</html>

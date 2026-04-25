@@ -15,12 +15,23 @@
     <h1>My Account</h1>
     <p>Manage your account settings and preferences.</p>
 
+    <!-- Icon-only action bar for accessibility_user frustration -->
+    <div class="card" style="margin-bottom: 1rem;">
+      <h3>Quick Actions</h3>
+      <div class="icon-bar" style="margin-top: 0.5rem;">
+        <button type="button" class="icon-btn" aria-label="View Orders" onclick="alert('View Orders')">📦</button>
+        <button type="button" class="icon-btn" aria-label="Edit Profile" onclick="alert('Edit Profile')">✏️</button>
+        <button type="button" class="icon-btn" aria-label="Notifications" onclick="alert('Notifications')">🔔</button>
+        <button type="button" class="icon-btn" aria-label="Security" onclick="alert('Security')">🔒</button>
+        <button type="button" class="icon-btn" aria-label="Help" onclick="alert('Help')">❓</button>
+      </div>
+    </div>
+
     <div class="grid-2">
       <div class="card">
         <h3>Profile Information</h3>
         <p>Name: Demo User</p>
         <p style="margin-bottom: 0;">Email: demo@example.com</p>
-        <a href="/account/settings/" class="btn btn-secondary" style="margin-top: 1rem; display: inline-block;">Edit Profile</a>
       </div>
       
       <div class="card">
@@ -31,33 +42,152 @@
       </div>
     </div>
 
+    <!-- Misleading "Quick Settings" that goes to a dead end -->
     <div class="card">
-      <h3>Quick Links</h3>
-      <ul class="nav-list" style="margin-top: 1rem;">
-        <li>
-          <a href="/account/settings/">
-            <span class="title">Account Settings</span>
-            <span class="desc">Notifications, password, and preferences</span>
-          </a>
-        </li>
-        <li>
-          <a href="/order-status/">
-            <span class="title">Order Status</span>
-            <span class="desc">Track and manage your orders</span>
-          </a>
-        </li>
-        <li>
-          <a href="/shop/">
-            <span class="title">Continue Shopping</span>
-            <span class="desc">Browse more products</span>
-          </a>
-        </li>
-      </ul>
+      <a href="#quick-settings-dead-end" style="display: block; text-decoration: none;">
+        <span class="title" style="color: var(--primary);">Quick Settings</span>
+        <span class="desc" style="display: block; color: var(--text-muted);">Fast access to common settings</span>
+      </a>
+      <div id="quick-settings-dead-end" style="margin-top: 1rem; padding: 1rem; background: var(--bg); border-radius: var(--radius);">
+        <p style="margin: 0; color: var(--text-muted);">Quick Settings is currently unavailable. Please use the Advanced Options below to access your settings.</p>
+      </div>
     </div>
 
-    <div style="margin-top: 1rem;">
+    <!-- Hidden menus with jargon - frustrating for non_tech_senior -->
+    <div class="card">
+      <h3>Account Options</h3>
+      
+      <!-- First level disclosure - collapsed by default -->
+      <div class="disclosure" style="margin-top: 1rem;">
+        <button 
+          type="button" 
+          class="disclosure-trigger" 
+          aria-expanded="false" 
+          aria-controls="advanced-options"
+          onclick="toggleDisclosure(this)"
+        >
+          <span>Advanced Account Options</span>
+          <span class="disclosure-arrow">▼</span>
+        </button>
+        <div id="advanced-options" class="disclosure-content">
+          <!-- Second level disclosure - also collapsed -->
+          <div class="disclosure" style="margin-top: 0.5rem;">
+            <button 
+              type="button" 
+              class="disclosure-trigger" 
+              aria-expanded="false" 
+              aria-controls="user-prefs"
+              onclick="toggleDisclosure(this)"
+              style="background: var(--bg);"
+            >
+              <span>User Preferences & Configuration</span>
+              <span class="disclosure-arrow">▼</span>
+            </button>
+            <div id="user-prefs" class="disclosure-content">
+              <ul class="nav-list">
+                <li>
+                  <a href="/account/settings/">
+                    <span class="title">Account Settings</span>
+                    <span class="desc">Notifications, password, and display preferences</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          
+          <!-- Technical jargon options -->
+          <div class="disclosure" style="margin-top: 0.5rem;">
+            <button 
+              type="button" 
+              class="disclosure-trigger" 
+              aria-expanded="false" 
+              aria-controls="tech-options"
+              onclick="toggleDisclosure(this)"
+              style="background: var(--bg);"
+            >
+              <span>Developer & Integration Tools</span>
+              <span class="disclosure-arrow">▼</span>
+            </button>
+            <div id="tech-options" class="disclosure-content">
+              <ul class="nav-list">
+                <li>
+                  <a href="#" onclick="alert('SSO configuration not available')">
+                    <span class="title">Configure SSO/SAML Settings</span>
+                    <span class="desc">Set up single sign-on authentication protocols</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" onclick="alert('API tokens not available')">
+                    <span class="title">Manage API Tokens & Webhooks</span>
+                    <span class="desc">OAuth2 credentials and REST API access</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" onclick="alert('2FA not available')">
+                    <span class="title">Two-Factor Authentication (2FA/MFA)</span>
+                    <span class="desc">TOTP, SMS, or hardware key configuration</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Another collapsed section -->
+      <div class="disclosure" style="margin-top: 0.5rem;">
+        <button 
+          type="button" 
+          class="disclosure-trigger" 
+          aria-expanded="false" 
+          aria-controls="data-privacy"
+          onclick="toggleDisclosure(this)"
+        >
+          <span>Data & Privacy Management</span>
+          <span class="disclosure-arrow">▼</span>
+        </button>
+        <div id="data-privacy" class="disclosure-content">
+          <ul class="nav-list">
+            <li>
+              <a href="#" onclick="alert('Data export not available')">
+                <span class="title">Export Personal Data (GDPR)</span>
+                <span class="desc">Download your data in JSON/CSV format</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" onclick="alert('Cookie preferences not available')">
+                <span class="title">Cookie Consent Preferences</span>
+                <span class="desc">Manage tracking and analytics cookies</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Easy visible path for non-tech users (footer alternative) -->
+    <div class="footer" style="background: #f0fdf4; padding: 1rem; border-radius: var(--radius); margin-top: 2rem;">
+      <strong>Need help finding something?</strong>
+      <p style="margin: 0.5rem 0;">
+        Looking for basic settings? Try this direct link:
+      </p>
+      <a href="/account/settings/" class="btn btn-primary" style="margin-right: 0.5rem;">
+        Settings (direct link)
+      </a>
       <a href="/" class="btn btn-secondary">Back to Hub</a>
     </div>
   </div>
+
+  <script>
+    function toggleDisclosure(button) {
+      const expanded = button.getAttribute('aria-expanded') === 'true';
+      button.setAttribute('aria-expanded', !expanded);
+      const contentId = button.getAttribute('aria-controls');
+      const content = document.getElementById(contentId);
+      if (content) {
+        content.classList.toggle('open', !expanded);
+      }
+    }
+  </script>
 </body>
 </html>
