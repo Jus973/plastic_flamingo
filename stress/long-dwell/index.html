@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Long Dwell - Flamboyance Playground</title>
+  <link rel="stylesheet" href="/src/style.css">
+  <style>
+    .dwell-timer {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      background: var(--card-bg);
+      border: 2px solid var(--primary);
+      border-radius: var(--radius);
+      padding: 0.75rem 1rem;
+      font-family: monospace;
+      font-size: 1.125rem;
+      z-index: 100;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+    .dwell-timer.triggered {
+      border-color: var(--danger);
+      background: #fef2f2;
+    }
+    .content-section {
+      margin-bottom: 2rem;
+      padding: 1.5rem;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+    .content-section h3 {
+      margin-top: 0;
+      color: var(--primary);
+    }
+    .terms-box {
+      max-height: 300px;
+      overflow-y: auto;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem;
+      font-size: 0.875rem;
+      line-height: 1.7;
+    }
+    .quiz-section {
+      background: #f0fdf4;
+      border-color: #22c55e;
+    }
+    .quiz-question {
+      margin-bottom: 1rem;
+      padding: 1rem;
+      background: white;
+      border-radius: var(--radius);
+    }
+    .progress-indicator {
+      margin-top: 2rem;
+      padding: 1rem;
+      background: #eff6ff;
+      border: 1px solid #3b82f6;
+      border-radius: var(--radius);
+    }
+  </style>
+</head>
+<body>
+  <div class="dwell-timer" id="dwell-timer">
+    Dwell: <span id="timer-value">0</span>s
+  </div>
+
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="/">Home</a> / Stress Tests / Long Dwell
+    </div>
+    
+    <h1>Long Dwell Test Page</h1>
+    <p>
+      This page is designed to encourage users to spend more than <strong>10 seconds</strong> 
+      on it, triggering the <code>long_dwell</code> frustration signal.
+    </p>
+
+    <div class="warning-message">
+      <strong>Scenario Goal:</strong> The <code>record_long_dwell(url, dwell_s)</code> function 
+      emits a <code>long_dwell</code> signal when dwell time exceeds 10 seconds. 
+      Watch the timer in the corner to see when this threshold is crossed.
+    </div>
+
+    <!-- Section 1: Terms and Conditions (requires scrolling and reading) -->
+    <div class="content-section">
+      <h3>Section 1: Terms and Conditions (Required Reading)</h3>
+      <p>Please read the following terms carefully before proceeding:</p>
+      <div class="terms-box">
+        <p><strong>1. ACCEPTANCE OF TERMS</strong></p>
+        <p>By accessing and using the Flamboyance Playground service, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use this service.</p>
+        
+        <p><strong>2. DESCRIPTION OF SERVICE</strong></p>
+        <p>Flamboyance Playground provides a testing environment for user experience analysis tools. The service includes various test scenarios designed to simulate common user frustration points including but not limited to: slow page loads, confusing navigation, dead ends, and inconsistent user interface behaviors.</p>
+        
+        <p><strong>3. USER CONDUCT</strong></p>
+        <p>Users agree to use the service only for lawful purposes and in accordance with these Terms. Users shall not: (a) use the service to transmit any unlawful, threatening, or harmful content; (b) attempt to gain unauthorized access to any portion of the service; (c) interfere with or disrupt the service or servers connected to the service.</p>
+        
+        <p><strong>4. INTELLECTUAL PROPERTY</strong></p>
+        <p>All content, features, and functionality of the service, including but not limited to text, graphics, logos, and software, are the exclusive property of Flamboyance and are protected by international copyright, trademark, and other intellectual property laws.</p>
+        
+        <p><strong>5. DISCLAIMER OF WARRANTIES</strong></p>
+        <p>The service is provided "as is" and "as available" without warranties of any kind, either express or implied. Flamboyance does not warrant that the service will be uninterrupted, error-free, or free of viruses or other harmful components.</p>
+        
+        <p><strong>6. LIMITATION OF LIABILITY</strong></p>
+        <p>In no event shall Flamboyance be liable for any indirect, incidental, special, consequential, or punitive damages arising out of or related to your use of the service, whether based on warranty, contract, tort, or any other legal theory.</p>
+        
+        <p><strong>7. CHANGES TO TERMS</strong></p>
+        <p>Flamboyance reserves the right to modify these Terms at any time. Your continued use of the service following any changes constitutes your acceptance of the new Terms.</p>
+        
+        <p><strong>8. GOVERNING LAW</strong></p>
+        <p>These Terms shall be governed by and construed in accordance with the laws of the jurisdiction in which Flamboyance operates, without regard to its conflict of law provisions.</p>
+      </div>
+    </div>
+
+    <!-- Section 2: Comprehension Quiz -->
+    <div class="content-section quiz-section">
+      <h3>Section 2: Comprehension Quiz</h3>
+      <p>Answer the following questions based on the terms above:</p>
+      
+      <div class="quiz-question">
+        <p><strong>Question 1:</strong> What happens if you don't agree to the Terms of Service?</p>
+        <label><input type="radio" name="q1" value="a"> a) You can still use the service with limited features</label><br>
+        <label><input type="radio" name="q1" value="b"> b) You should not use this service</label><br>
+        <label><input type="radio" name="q1" value="c"> c) You can negotiate alternative terms</label>
+      </div>
+      
+      <div class="quiz-question">
+        <p><strong>Question 2:</strong> What type of warranties does the service provide?</p>
+        <label><input type="radio" name="q2" value="a"> a) Full warranty for 30 days</label><br>
+        <label><input type="radio" name="q2" value="b"> b) No warranties - service is provided "as is"</label><br>
+        <label><input type="radio" name="q2" value="c"> c) Limited warranty on core features</label>
+      </div>
+      
+      <div class="quiz-question">
+        <p><strong>Question 3:</strong> Who owns the intellectual property of the service?</p>
+        <label><input type="radio" name="q3" value="a"> a) The users who contribute content</label><br>
+        <label><input type="radio" name="q3" value="b"> b) It's open source and public domain</label><br>
+        <label><input type="radio" name="q3" value="c"> c) Flamboyance exclusively</label>
+      </div>
+    </div>
+
+    <!-- Section 3: Additional Information -->
+    <div class="content-section">
+      <h3>Section 3: Understanding Long Dwell Signals</h3>
+      <p>
+        In user experience analytics, <strong>long dwell time</strong> can indicate several things:
+      </p>
+      <ul>
+        <li><strong>Engagement:</strong> The user is genuinely interested in the content</li>
+        <li><strong>Confusion:</strong> The user is struggling to understand what to do next</li>
+        <li><strong>Information Overload:</strong> Too much content requiring extended reading time</li>
+        <li><strong>Distraction:</strong> The user may have switched tabs or been interrupted</li>
+      </ul>
+      <p>
+        The <code>long_dwell</code> signal is triggered when a user spends more than 10 seconds 
+        on a page. Combined with other signals, this can help identify potential UX issues.
+      </p>
+      <p>
+        For example, a long dwell time combined with multiple clicks or form attempts might 
+        indicate confusion, while a long dwell time on a content-heavy page with smooth 
+        scrolling behavior might indicate genuine engagement.
+      </p>
+    </div>
+
+    <!-- Progress indicator -->
+    <div class="progress-indicator">
+      <strong>Reading Progress:</strong>
+      <p id="progress-status" style="margin-bottom: 0;">
+        Keep reading to trigger the long_dwell signal (10+ seconds)...
+      </p>
+    </div>
+
+    <div style="margin-top: 2rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+      <button type="button" class="btn btn-primary" onclick="checkAnswers()">Submit Quiz</button>
+      <a href="/" class="btn btn-secondary">Back to Hub</a>
+      <a href="/stress/slow/" class="btn btn-secondary">Try Slow Page</a>
+    </div>
+  </div>
+
+  <script>
+    let dwellSeconds = 0;
+    const timerEl = document.getElementById('timer-value');
+    const timerBox = document.getElementById('dwell-timer');
+    const progressStatus = document.getElementById('progress-status');
+    
+    setInterval(() => {
+      dwellSeconds++;
+      timerEl.textContent = dwellSeconds;
+      
+      if (dwellSeconds >= 10) {
+        timerBox.classList.add('triggered');
+        progressStatus.innerHTML = '<span style="color: var(--danger);">⚠️ long_dwell signal triggered!</span> You have been on this page for ' + dwellSeconds + ' seconds.';
+      }
+    }, 1000);
+    
+    function checkAnswers() {
+      const correct = {q1: 'b', q2: 'b', q3: 'c'};
+      let score = 0;
+      
+      for (const [q, ans] of Object.entries(correct)) {
+        const selected = document.querySelector(`input[name="${q}"]:checked`);
+        if (selected && selected.value === ans) score++;
+      }
+      
+      alert(`Quiz Result: ${score}/3 correct!\n\nYou spent ${dwellSeconds} seconds on this page.`);
+    }
+  </script>
+</body>
+</html>

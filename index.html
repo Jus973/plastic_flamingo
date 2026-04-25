@@ -99,7 +99,19 @@
         <li>
           <a href="/stress/slow/">
             <span class="title">Slow Page</span>
-            <span class="desc">10-second delay for testing low-patience personas</span>
+            <span class="desc">Configurable delay (default 4s) triggers slow_load signal (&gt;3000ms)</span>
+          </a>
+        </li>
+        <li>
+          <a href="/stress/dead-end/">
+            <span class="title">Dead End</span>
+            <span class="desc">Page with NO clickable elements - triggers dead_end signal</span>
+          </a>
+        </li>
+        <li>
+          <a href="/stress/long-dwell/">
+            <span class="title">Long Dwell</span>
+            <span class="desc">Content-heavy page encouraging &gt;10s dwell time - triggers long_dwell signal</span>
           </a>
         </li>
         <li>

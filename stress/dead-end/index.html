@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dead End - Flamboyance Playground</title>
+  <link rel="stylesheet" href="/src/style.css">
+  <style>
+    .dead-end-container {
+      text-align: center;
+      padding: 3rem 1rem;
+    }
+    .dead-end-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+    }
+    .dead-end-message {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    .info-box {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-top: 2rem;
+      text-align: left;
+    }
+    .fake-breadcrumb {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+    .fake-breadcrumb span {
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Breadcrumb that looks like links but is just text (no actual links) -->
+    <div class="fake-breadcrumb">
+      <span>Home</span> / <span>Stress Tests</span> / <span>Dead End</span>
+    </div>
+    
+    <div class="dead-end-container">
+      <div class="dead-end-icon">🚫</div>
+      <h1>You've Reached a Dead End</h1>
+      
+      <div class="dead-end-message">
+        <p>
+          This page intentionally has <strong>no clickable elements</strong>. 
+          There are no links, no buttons, and no interactive elements whatsoever.
+        </p>
+        
+        <p style="color: var(--text-muted);">
+          This scenario is designed to trigger the <code>dead_end</code> frustration signal 
+          when Flamboyance detects that there are no clickable elements on the page.
+        </p>
+      </div>
+
+      <div class="info-box">
+        <h3 style="margin-top: 0;">Dead End Detection</h3>
+        <p>
+          The <code>record_dead_end(url)</code> function emits a <code>dead_end</code> signal 
+          when no clickable elements (links, buttons, or other interactive elements) are found on the page.
+        </p>
+        <p>
+          Users encountering this page have no way to navigate forward through the UI. 
+          They must use browser navigation (back button) or type a new URL manually.
+        </p>
+        <p style="margin-bottom: 0;">
+          <strong>Expected behavior:</strong> Synthetic users should identify this as a frustration point 
+          and either navigate back or report the dead end.
+        </p>
+      </div>
+
+      <div class="info-box" style="background: #fef3c7; border-color: #f59e0b;">
+        <h3 style="margin-top: 0; color: #92400e;">How to Escape</h3>
+        <p style="margin-bottom: 0; color: #78350f;">
+          Since there are no clickable elements, you must use your browser's back button, 
+          keyboard shortcut (Alt+Left or Cmd+[), or manually navigate to another URL.
+        </p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

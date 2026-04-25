@@ -5,12 +5,58 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Slow Page - Flamboyance Playground</title>
   <link rel="stylesheet" href="/src/style.css">
+  <style>
+    .load-time-display {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      background: var(--card-bg);
+      border: 2px solid var(--warning);
+      border-radius: var(--radius);
+      padding: 0.75rem 1rem;
+      font-family: monospace;
+      font-size: 0.875rem;
+      z-index: 100;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+    .load-time-display.slow {
+      border-color: var(--danger);
+      background: #fef2f2;
+    }
+    .variant-links {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin: 1rem 0;
+    }
+    .variant-links a {
+      padding: 0.5rem 1rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      text-decoration: none;
+      color: var(--text);
+      font-size: 0.875rem;
+    }
+    .variant-links a:hover, .variant-links a.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+  </style>
+  <script>
+    window.pageLoadStart = performance.now();
+  </script>
 </head>
 <body>
+  <div class="load-time-display" id="load-time-display">
+    Load time: <span id="load-time-value">calculating...</span>
+  </div>
+
   <div id="loading-overlay" class="loading-overlay">
     <div class="spinner"></div>
     <p style="margin-top: 1rem; color: var(--text-muted);">Loading content...</p>
-    <p id="countdown" style="font-size: 0.875rem; color: var(--text-muted);">10 seconds remaining</p>
+    <p id="countdown" style="font-size: 0.875rem; color: var(--text-muted);">Calculating delay...</p>
   </div>
 
   <div id="main-content" class="container" style="display: none;">
@@ -20,9 +66,29 @@
     
     <h1>Slow Page Test</h1>
     <p>
-      This page intentionally delays showing its main content for <strong>~10 seconds</strong> 
-      to test low-patience personas that may give up early.
+      This page intentionally delays showing its main content to test the 
+      <code>slow_load</code> frustration signal (triggered when load time &gt; 3000ms).
     </p>
+
+    <div class="warning-message">
+      <strong>slow_load Signal:</strong> The <code>record_slow_load(url, load_time_ms)</code> 
+      function emits a <code>slow_load</code> signal when page load time exceeds 3000ms.
+    </div>
+
+    <!-- Delay variant selection -->
+    <div class="card">
+      <h3>Test Different Load Times</h3>
+      <p>Select a delay variant to test different load time thresholds:</p>
+      <div class="variant-links">
+        <a href="/stress/slow/?delay=2000">2s (under threshold)</a>
+        <a href="/stress/slow/?delay=4000">4s (triggers slow_load)</a>
+        <a href="/stress/slow/?delay=6000">6s (slow)</a>
+        <a href="/stress/slow/?delay=10000">10s (very slow)</a>
+      </div>
+      <p style="font-size: 0.875rem; color: var(--text-muted);">
+        Default delay is 4 seconds if no parameter is specified.
+      </p>
+    </div>
 
     <div class="success-message">
       <strong>Content Loaded!</strong>
@@ -58,12 +124,18 @@
   </div>
 
   <script>
-    const DELAY_SECONDS = 10;
+    const urlParams = new URLSearchParams(window.location.search);
+    const DELAY_MS = parseInt(urlParams.get('delay')) || 4000;
+    const DELAY_SECONDS = Math.ceil(DELAY_MS / 1000);
     let remaining = DELAY_SECONDS;
     
     const countdownEl = document.getElementById('countdown');
     const loadingOverlay = document.getElementById('loading-overlay');
     const mainContent = document.getElementById('main-content');
+    const loadTimeValue = document.getElementById('load-time-value');
+    const loadTimeDisplay = document.getElementById('load-time-display');
+    
+    countdownEl.textContent = `${remaining} second${remaining !== 1 ? 's' : ''} remaining`;
     
     const countdownInterval = setInterval(() => {
       remaining--;
@@ -78,7 +150,18 @@
       clearInterval(countdownInterval);
       loadingOverlay.style.display = 'none';
       mainContent.style.display = 'block';
-    }, DELAY_SECONDS * 1000);
+      
+      const loadTime = Math.round(performance.now() - window.pageLoadStart);
+      loadTimeValue.textContent = loadTime + 'ms';
+      
+      if (loadTime > 3000) {
+        loadTimeDisplay.classList.add('slow');
+        loadTimeValue.textContent += ' (slow_load triggered!)';
+      }
+      
+      const activeLink = document.querySelector(`.variant-links a[href*="delay=${DELAY_MS}"]`);
+      if (activeLink) activeLink.classList.add('active');
+    }, DELAY_MS);
   </script>
 </body>
 </html>
